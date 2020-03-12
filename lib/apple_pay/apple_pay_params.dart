@@ -6,8 +6,12 @@ class ApplePayParams {
   String _currency;
   bool _isSandbox;
 
-  ApplePayParams({@required String appleMerchantId, @required int amount, @required String currency, bool isSandbox = true}):
-        this._appleMerchantId = appleMerchantId,
+  ApplePayParams(
+      {@required String appleMerchantId,
+      @required int amount,
+      @required String currency,
+      bool isSandbox = true})
+      : this._appleMerchantId = appleMerchantId,
         this._amount = amount,
         this._currency = currency,
         this._isSandbox = isSandbox;
@@ -19,10 +23,10 @@ class ApplePayParams {
 
   Map<String, dynamic> toMap() {
     return {
-      "appleMerchantId" : _appleMerchantId,
-      "amount" : _amount,
-      "currency" : _currency,
-      "isSandbox" : _isSandbox
+      "appleMerchantId": _appleMerchantId,
+      "amount": _amount,
+      "currency": _currency,
+      "isSandbox": _isSandbox
     };
   }
 }

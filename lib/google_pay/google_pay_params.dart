@@ -6,11 +6,15 @@ class GooglePayParams {
   String _currency;
   bool _isSandbox;
 
-  GooglePayParams({@required int merchantId, @required int amount, @required String currency, bool isSandbox = true}):
-      this._merchantId = merchantId,
-      this._amount = amount,
-      this._currency = currency,
-      this._isSandbox = isSandbox;
+  GooglePayParams(
+      {@required int merchantId,
+      @required int amount,
+      @required String currency,
+      bool isSandbox = true})
+      : this._merchantId = merchantId,
+        this._amount = amount,
+        this._currency = currency,
+        this._isSandbox = isSandbox;
 
   int get merchantId => _merchantId;
   int get amount => _amount;
@@ -19,10 +23,10 @@ class GooglePayParams {
 
   Map<String, dynamic> toMap() {
     return {
-      "merchantId" : _merchantId,
-      "amount" : _amount,
-      "currency" : _currency,
-      "isSandbox" : _isSandbox
+      "merchantId": _merchantId,
+      "amount": _amount,
+      "currency": _currency,
+      "isSandbox": _isSandbox
     };
   }
 }

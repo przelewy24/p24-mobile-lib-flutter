@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 
 class PassageItem {
-  
   final String _name;
   final String _description;
   final int _quantity;
@@ -10,15 +9,21 @@ class PassageItem {
   final int _targetAmount;
   final _targetPosId;
 
-  PassageItem({@required String name, @required String description, @required int quantity,
-   @required int price, @required int number, @required int targetAmount, @required int targetPosId}) :
-      this._name = name,
-      this._description = description,
-      this._quantity = quantity,
-      this._price = price,
-      this._number = number,
-      this._targetAmount = targetAmount,
-      this._targetPosId = targetPosId;
+  PassageItem(
+      {@required String name,
+      @required String description,
+      @required int quantity,
+      @required int price,
+      @required int number,
+      @required int targetAmount,
+      @required int targetPosId})
+      : this._name = name,
+        this._description = description,
+        this._quantity = quantity,
+        this._price = price,
+        this._number = number,
+        this._targetAmount = targetAmount,
+        this._targetPosId = targetPosId;
 
   int get targetPosId => _targetPosId;
   int get targetAmount => _targetAmount;
@@ -30,14 +35,13 @@ class PassageItem {
 
   Map<String, dynamic> toMap() {
     return {
-      "name" : _name,
-      "description" : _description,
-      "quantity" : _quantity,
-      "price" : _price,
-      "number" : _number,
-      "targetAmount" : _targetAmount,
-      "targetPosId" : _targetPosId,
+      "name": _name,
+      "description": _description,
+      "quantity": _quantity,
+      "price": _price,
+      "number": _number,
+      "targetAmount": _targetAmount,
+      "targetPosId": _targetPosId,
     };
   }
-
 }

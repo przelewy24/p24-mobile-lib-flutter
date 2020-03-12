@@ -1,8 +1,8 @@
 import 'package:flutter/services.dart';
 
 class SdkConfig {
-
-  static const MethodChannel _channel = const MethodChannel('p24_sdk/sdk_config');
+  static const MethodChannel _channel =
+      const MethodChannel('p24_sdk/sdk_config');
 
   static Future setCertificatePinningEnabled(bool value) async {
     await _channel.invokeMethod("setCertificatePinningEnabled", value);

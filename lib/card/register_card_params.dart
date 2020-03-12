@@ -4,14 +4,13 @@ class RegisterCardParams {
   final String _url;
   final CardData _cardData;
 
-  RegisterCardParams({String url, CardData cardData}) :
-    this._url = url,
-    this._cardData = null;
+  RegisterCardParams({String url, CardData cardData})
+      : this._url = url,
+        this._cardData = null;
 
-
-  RegisterCardParams.prefilled({String url, CardData cardData}) :
-    this._url = url,
-    this._cardData = cardData;
+  RegisterCardParams.prefilled({String url, CardData cardData})
+      : this._url = url,
+        this._cardData = cardData;
 
   CardData get cardData => _cardData;
   String get url => _url;
@@ -22,5 +21,4 @@ class RegisterCardParams {
       "cardData": _cardData.toMap(),
     };
   }
-
 }

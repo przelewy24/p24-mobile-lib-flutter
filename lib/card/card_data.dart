@@ -1,15 +1,14 @@
 class CardData {
-
   final String _number;
   final int _expiryMonth;
   final int _expiryYear;
   final String _cvv;
 
-  CardData({String number, int expiryMonth, int expiryYear, String cvv}) :
-  this._number = number,
-  this._expiryMonth = expiryMonth,
-  this._expiryYear = expiryYear,
-  this._cvv = cvv;
+  CardData({String number, int expiryMonth, int expiryYear, String cvv})
+      : this._number = number,
+        this._expiryMonth = expiryMonth,
+        this._expiryYear = expiryYear,
+        this._cvv = cvv;
 
   String get cvv => _cvv;
   int get expiryYear => _expiryYear;
@@ -27,10 +26,9 @@ class CardData {
     return cardData;
   }
 
-  void putIfValueNotNull(String key, dynamic value, Map<String, dynamic> map){
-    if(value != null){
+  void putIfValueNotNull(String key, dynamic value, Map<String, dynamic> map) {
+    if (value != null) {
       map[key] = value;
     }
   }
-
 }

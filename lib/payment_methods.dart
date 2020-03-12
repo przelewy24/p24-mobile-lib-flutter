@@ -14,7 +14,6 @@ import 'package:p24_sdk/transfer/trn_request_params.dart';
 import 'package:p24_sdk/transfer/express_params.dart';
 
 class P24SDK {
-
   static const MethodChannel _channel = const MethodChannel('p24_sdk');
 
   static Future<String> getSdkVersion() async {
@@ -41,13 +40,15 @@ class P24SDK {
     return SdkResult.fromMap(result);
   }
 
-  static Future<SdkResult> googlePay(GooglePayParams params, GooglePayTrnRegistrar registrar) async {
+  static Future<SdkResult> googlePay(
+      GooglePayParams params, GooglePayTrnRegistrar registrar) async {
     GooglePayRegistrarChannel.bind(registrar);
     var result = await _channel.invokeMethod("googlePay", params.toMap());
     return SdkResult.fromMap(result);
   }
 
-  static Future<SdkResult> applePay(ApplePayParams params, ApplePayTrnRegistrar registrar) async {
+  static Future<SdkResult> applePay(
+      ApplePayParams params, ApplePayTrnRegistrar registrar) async {
     ApplePayRegistrarChannel.bind(registrar);
     var result = await _channel.invokeMethod("applePay", params.toMap());
     return SdkResult.fromMap(result);
@@ -57,5 +58,4 @@ class P24SDK {
     var result = await _channel.invokeMethod("registerCard", params.toMap());
     return SdkResult.fromMap(result);
   }
-
 }
