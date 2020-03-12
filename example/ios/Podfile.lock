@@ -1,0 +1,22 @@
+PODS:
+  - Flutter (1.0.0)
+  - p24_sdk (0.0.1):
+    - Flutter
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - p24_sdk (from `.symlinks/plugins/p24_sdk/ios`)
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  p24_sdk:
+    :path: ".symlinks/plugins/p24_sdk/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 0e3d915762c693b495b44d77113d4970485de6ec
+  p24_sdk: 9c6f1b8056ba3c4f4eeead4c32f3af17148944bb
+
+PODFILE CHECKSUM: 49ec7d4076524b7e225c38b98147173651ac4b9d
+
+COCOAPODS: 1.8.4

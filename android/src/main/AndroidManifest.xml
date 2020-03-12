@@ -1,0 +1,33 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+  package="pl.przelewy24.p24_sdk">
+
+    <application>
+
+        <activity
+            android:name="pl.przelewy24.p24lib.transfer.TransferActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
+            android:theme="@style/Theme.AppCompat"
+            >
+        </activity>
+
+
+        <activity
+            android:name="pl.przelewy24.p24lib.card.RegisterCardActivity"
+            android:configChanges="keyboardHidden|orientation|keyboard|screenSize"
+            android:theme="@style/Theme.AppCompat">
+        </activity>
+
+        <activity
+            android:name="pl.przelewy24.p24lib.google_pay.GooglePayActivity"
+            android:theme="@style/Theme.AppCompat.Translucent"
+            android:configChanges="keyboardHidden|orientation|keyboard|screenSize">
+        </activity>
+
+        <meta-data
+            android:name="com.google.android.gms.wallet.api.enabled"
+            android:value="true" />
+
+    </application>
+
+    
+</manifest>

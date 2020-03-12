@@ -1,0 +1,26 @@
+name: p24_sdk
+description: Przelewy24 Mobile SDK
+version: 1.0.0
+author: Przelewy24
+homepage: https://github.com/przelewy24/p24-mobile-lib-flutter
+
+environment:
+  sdk: ">=2.1.0 <3.0.0"
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+  plugin:
+    androidPackage: pl.przelewy24.p24_sdk
+    pluginClass: P24SdkPlugin
+
+
+
+
+
