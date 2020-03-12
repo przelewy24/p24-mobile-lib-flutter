@@ -7,9 +7,10 @@ Ogólne informacje o działaniu bibliotek mobilnych w systemie Przelewy24 znajdz
 
 ## 1. Konfiguracja projektu
 
-W ustawieniach projektu Xcode należy ustawić „iOS Deployment Target” (zakładka „Info” ustawień projektu) na wersję 9.0 lub nowszą. Wersja 9.0 to minimalna wersja systemu iOS wymagana do poprawnego działania biblioteki.
-
-![](img/ios_config.png)
+|Dla iOS|
+|-|
+|W ustawieniach projektu Xcode należy ustawić „iOS Deployment Target” (zakładka „Info” ustawień projektu) na wersję 9.0 lub nowszą. Wersja 9.0 to minimalna wersja systemu iOS wymagana do poprawnego działania biblioteki.\
+|![](img/ios_config.png)|
 
 ### Dodawanie zależności
 

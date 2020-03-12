@@ -1,4 +1,4 @@
-# Przelewy24 library documentation - Android
+# Przelewy24 library documentation - Flutter
 
 For general information on the operation of Przelewy24 mobile libraries, visit:
 
@@ -6,9 +6,10 @@ For general information on the operation of Przelewy24 mobile libraries, visit:
 
 ## 1. Project configuration
 
-In project Xcode settings set „iOS Deployment Target” ( „Info” project settings bookmark) to version 9.0 or newer. Version 9.0 is the minimum requirement for the library to work properly with the iOS. 
-
-![](img/ios_config.png)
+|For iOS only|
+|-|
+|In project Xcode settings set „iOS Deployment Target” ( „Info” project settings bookmark) to version 9.0 or newer. Version 9.0 is the minimum requirement for the library to work properly with the iOS. |
+|![](img/ios_config.png)|
 
 ### Adding dependencies
 
