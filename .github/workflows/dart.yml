@@ -1,0 +1,48 @@
+name: Publish plugin to pub.dev
+on:
+  push:
+    branches:   
+      - master
+jobs:
+  release:
+    name: Release new plugin version to pub.dev
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.commits[0].message, 'library file version')
+    container:
+      image:  google/dart:latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Update plugin version
+        run: |
+          version=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
+          lastNumber=$(echo $version | grep -Eo '[0-9]+$')
+          lastNumber=$((lastNumber+1))
+          newVersion=$(echo "${version%.*}.${lastNumber}")
+          sed -i "s/^version: .*$/version: $newVersion/" pubspec.yaml
+
+          echo "" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo -n "## " >> CHANGELOG.md
+          echo "$newVersion" >> CHANGELOG.md
+          echo "" >> CHANGELOG.md
+          echo -n "* New library file" >> CHANGELOG.md
+
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pubspec.yaml
+          git commit -m "Release version $newVersion" -a
+          git push origin master
+      - name: Setup credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          cat <<EOF > ~/.pub-cache/credentials.json
+          {
+            "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
+            "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": 1570721159347
+          }
+          EOF
+      - name: Publish package
+        run: pub publish -f
