@@ -18,3 +18,7 @@
 ## 1.0.4
 
 * New library file
+
+## 1.0.5
+
+* New library file
