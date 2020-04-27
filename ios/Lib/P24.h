@@ -188,13 +188,15 @@
 @property (nonatomic, copy) NSString *appleMerchantId;
 @property (nonatomic, assign) int amount;
 @property (nonatomic, copy) NSString *currency;
+@property (nonatomic, copy) NSString *payeeName;
 @property (weak) id<P24ApplePayTransactionRegistrar> registrar;
 @property (nonatomic, assign, readwrite) BOOL sandbox;
 
 - (instancetype)initWithAppleMerchantId:(NSString *)appleMerchantId
-                                 amount: (int)amount
+                                 amount:(int)amount
                                currency:(NSString *)currency
-                              registrar: (id<P24ApplePayTransactionRegistrar>) registrar;
+                              payeeName:(NSString *)payeeName
+                              registrar:(id<P24ApplePayTransactionRegistrar>) registrar;
 
 @end
 
