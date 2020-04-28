@@ -183,20 +183,33 @@
 
 @end
 
+@interface PaymentItem : NSObject
+
+@property (nonatomic, copy) NSString *itemDescription;
+@property (nonatomic, assign) int amount;
+
+@end
+
 @interface P24ApplePayParams: NSObject
 
 @property (nonatomic, copy) NSString *appleMerchantId;
 @property (nonatomic, assign) int amount;
 @property (nonatomic, copy) NSString *currency;
 @property (nonatomic, copy) NSString *description;
+@property (nonatomic, copy) NSArray<PaymentItem *> *items;
 @property (weak) id<P24ApplePayTransactionRegistrar> registrar;
 @property (nonatomic, assign, readwrite) BOOL sandbox;
 
 - (instancetype)initWithAppleMerchantId:(NSString *)appleMerchantId
                                  amount:(int)amount
                                currency:(NSString *)currency
-                              description:(NSString *)description
+                            description:(NSString *)description
                               registrar:(id<P24ApplePayTransactionRegistrar>) registrar;
+
+- (instancetype)initWithItems: (NSArray<PaymentItem *> *) items
+                     currency: (NSString *) currency
+              appleMerchantId: (NSString *) appleMerchantId
+                    registrar: (id<P24ApplePayTransactionRegistrar>) registrar;
 
 @end
 
