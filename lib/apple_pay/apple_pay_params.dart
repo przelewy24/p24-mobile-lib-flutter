@@ -1,32 +1,42 @@
 import 'package:flutter/foundation.dart';
+import 'package:p24_sdk/apple_pay/payment_item.dart';
 
 class ApplePayParams {
-  String _appleMerchantId;
-  int _amount;
-  String _currency;
-  bool _isSandbox;
+	String _appleMerchantId;
+	String _currency;
+	bool _isSandbox;
+	List<PaymentItem> _items;
 
-  ApplePayParams(
-      {@required String appleMerchantId,
-      @required int amount,
-      @required String currency,
-      bool isSandbox = true})
-      : this._appleMerchantId = appleMerchantId,
-        this._amount = amount,
-        this._currency = currency,
-        this._isSandbox = isSandbox;
+	factory ApplePayParams.withSingleItem({
+		@required String appleMerchantId,
+		@required int amount,
+		@required String currency,
+		@required String description,
+		bool isSandbox = true}) => ApplePayParams._([PaymentItem(amount: amount, description: description)], currency, appleMerchantId, isSandbox);
 
-  String get appleMerchantId => _appleMerchantId;
-  int get amount => _amount;
-  bool get isSandbox => _isSandbox;
-  String get currency => _currency;
+	factory ApplePayParams.withMultipleItems({
+		@required List<PaymentItem> items,
+		@required String appleMerchantId,
+		@required String currency,
+		bool isSandbox = true}) => ApplePayParams._(items, currency, appleMerchantId, isSandbox);
 
-  Map<String, dynamic> toMap() {
-    return {
-      "appleMerchantId": _appleMerchantId,
-      "amount": _amount,
-      "currency": _currency,
-      "isSandbox": _isSandbox
-    };
-  }
+	ApplePayParams._(this._items, this._currency, this._appleMerchantId, this._isSandbox);
+
+	String get appleMerchantId => _appleMerchantId;
+	String get currency => _currency;
+	bool get isSandbox => _isSandbox;
+	List<PaymentItem>  get items => _items;
+
+	Map<String, dynamic> toMap() {
+		return {
+			"items": itemsToMap(),
+			"currency": _currency,
+			"appleMerchantId": _appleMerchantId,
+			"isSandbox": _isSandbox
+		};
+	}
+
+	List<dynamic> itemsToMap() {
+		return _items.map((element) => element.toMap()).toList();
+	}
 }

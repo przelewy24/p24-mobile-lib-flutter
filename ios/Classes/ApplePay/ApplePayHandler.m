@@ -15,23 +15,41 @@
 }
 
 - (void) start: (NSDictionary *) dictionary result:(FlutterResult) result {
-    
     flutterResult = result;
     UIViewController * viewController = [RootViewControllerProvider get];
-    
+
     bool isSandbox = [[dictionary objectForKey:@"isSandbox"] boolValue];
+
     P24ApplePayParams* params = [self parseApplePayParams: dictionary];
-    
+
     params.sandbox = isSandbox;
     [P24 startApplePay:params inViewController: viewController delegate:self];
 }
 
 - (P24ApplePayParams *) parseApplePayParams: (NSDictionary *) dictionary {
     NSString* appleMerchantId = [dictionary valueForKey:@"appleMerchantId"];
-    int amount = [[dictionary objectForKey:@"amount"] intValue];
     NSString* currency = [dictionary objectForKey:@"currency"];
-        
-    return [[P24ApplePayParams alloc] initWithAppleMerchantId: appleMerchantId amount: amount currency: currency registrar: channel];
+    NSArray<PaymentItem *> * items = [self getItemsList: dictionary];
+
+    return [[P24ApplePayParams alloc]
+            initWithItems: items
+            currency: currency
+            appleMerchantId: appleMerchantId
+            registrar: channel];
+}
+
+- (NSArray<PaymentItem *> *) getItemsList: (NSDictionary *) dictionary {
+    NSArray<NSDictionary *> * itemsDictionary = [dictionary valueForKey:@"items"];
+    NSMutableArray<PaymentItem *> * paymentItemsList = [[NSMutableArray<PaymentItem *> alloc] init];
+
+    for(NSDictionary * singleItem in itemsDictionary){
+        PaymentItem * item = [[PaymentItem alloc] init];
+        item.amount = [[singleItem objectForKey:@"amount"] intValue];
+        item.itemDescription = [singleItem objectForKey:@"description"];
+        [paymentItemsList addObject: item];
+    }
+
+    return paymentItemsList;
 }
 
 - (void)p24ApplePayOnCanceled {

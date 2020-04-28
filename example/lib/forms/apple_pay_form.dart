@@ -59,12 +59,20 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
   void _startApplePay() {
     setState(() => _sdkResult = null);
 
-    ApplePayParams params = ApplePayParams(
+    ApplePayParams params = ApplePayParams.withSingleItem(
         appleMerchantId: _appleMerchantId,
         amount: _amount,
         currency: "PLN",
+        description: "Test payment",
         isSandbox: widget.isSandboxEnabled
     );
+
+//		ApplePayParams params = ApplePayParams.withMultipleItems(
+//			appleMerchantId: _appleMerchantId,
+//			items: _buildApplePayItems(),
+//			currency: "PLN",
+//			isSandbox: widget.isSandboxEnabled
+//		);
 
     P24SDK.applePay(params, this).then((value) {
       setState(() {
@@ -72,6 +80,12 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
       });
     });
   }
+
+  List<PaymentItem> _buildApplePayItems() {
+  	PaymentItem firstItem = PaymentItem(description: "first item", amount: 12);
+		PaymentItem secondItem = PaymentItem(description: "second item", amount: 18);
+		return [firstItem, secondItem];
+	}
 
   @override
   Future<ApplePayExchangeResult> exchange(String methodRefId) {

@@ -16,6 +16,7 @@ export 'package:p24_sdk/apple_pay/apple_pay_trn_registrar.dart';
 export 'package:p24_sdk/apple_pay/apple_pay_params.dart';
 export 'package:p24_sdk/apple_pay/apple_pay_registrar_channel.dart';
 export 'package:p24_sdk/apple_pay/apple_pay_exchange_result.dart';
+export 'package:p24_sdk/apple_pay/payment_item.dart';
 
 export 'package:p24_sdk/google_pay/google_pay_params.dart';
 export 'package:p24_sdk/google_pay/google_pay_trn_registrar.dart';
