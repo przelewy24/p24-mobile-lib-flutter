@@ -222,9 +222,25 @@ To use the Apple Pay payment you must first make an additional configuration of 
 To initiate a transaction, you must pass the transaction parameters and the `ApplePayTransactionRegistrar` object that is used to register the transaction:
 
 ```dart
-ApplePayParams params = ApplePayParams(
+ApplePayParams params = ApplePayParams.withSingleItem(
     appleMerchantId: APPLE_MERCHANT_ID,
     amount: AMOUNT_IN_GR,
+    currency: CURRENCY,
+    description: DESCRIPTION,
+    isSandbox: IS_SANDBOX
+);
+
+P24SDK.applePay(params, getApplePayTransactionRegistrar()).then((response) {
+    //handle response
+});
+```
+
+Alternatively, in `ApplePayParams` object instead of amount and description can be passed objects list of type `PaymentItem`:
+
+```dart
+ApplePayParams params = ApplePayParams.withMultipleItems(
+    appleMerchantId: APPLE_MERCHANT_ID,
+    items: [exampleItem, exampleItem2],
     currency: CURRENCY,
     isSandbox: IS_SANDBOX
 );
@@ -232,6 +248,12 @@ ApplePayParams params = ApplePayParams(
 P24SDK.applePay(params, getApplePayTransactionRegistrar()).then((response) {
     //handle response
 });
+```
+
+Object `PaymentItem` consists of `itemDescription` and `amount` fields:
+
+```dart
+PaymentItem exampleItem = PaymentItem(description: DESCRIPTION, amount: AMOUNT);
 ```
 
 **NOTE**

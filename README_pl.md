@@ -223,9 +223,25 @@ Do skorzystania z Apple Pay konieczna jest dodatkowa konfiguracja projektu zgodn
 By zainicjować transakcję należy przekazać parametry transakcji oraz obiekt `ApplePayTransactionRegistrar`, który służy do rejestracji transakcji:
 
 ```dart
-ApplePayParams params = ApplePayParams(
+ApplePayParams params = ApplePayParams.withSingleItem(
     appleMerchantId: APPLE_MERCHANT_ID,
     amount: AMOUNT_IN_GR,
+    currency: CURRENCY,
+    description: DESCRIPTION,
+    isSandbox: IS_SANDBOX
+);
+
+P24SDK.applePay(params, getApplePayTransactionRegistrar()).then((response) {
+    //handle response
+});
+```
+
+Alternatywnie, w obiekcie ApplePayParams zamiast kwoty i opisu może zostać przekazana lista obiektów typu `PaymentItem`:
+
+```dart
+ApplePayParams params = ApplePayParams.withMultipleItems(
+    appleMerchantId: APPLE_MERCHANT_ID,
+    items: [exampleItem, exampleItem2],
     currency: CURRENCY,
     isSandbox: IS_SANDBOX
 );
@@ -233,6 +249,12 @@ ApplePayParams params = ApplePayParams(
 P24SDK.applePay(params, getApplePayTransactionRegistrar()).then((response) {
     //handle response
 });
+```
+
+Obiekt `PaymentItem` składa się z pola `itemDescription` oraz `amount`:
+
+```dart
+PaymentItem firstItem = PaymentItem(description: DESCRIPTION, amount: AMOUNT);
 ```
 
 **UWAGA**
