@@ -81,9 +81,11 @@
 
 + (BOOL) isCertificatePinningEnabled;
 + (BOOL) isExitOnBackButtonEnabled;
++ (BOOL) isSplitPaymentEnabled;
 
 + (void) setCertificatePinningEnabled: (BOOL) isEnabled;
 + (void) setExitOnBackButtonEnabled: (BOOL) isEnabled;
++ (void) setSplitPaymentEnabled: (BOOL) isEnabled;
 
 @end
 
