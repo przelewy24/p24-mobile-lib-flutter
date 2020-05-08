@@ -26,3 +26,7 @@
 ## 1.0.6
 
 * New library file
+
+## 1.0.7
+
+* New library file
