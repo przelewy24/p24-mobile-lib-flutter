@@ -21,7 +21,7 @@ class SdkConfigMethodCallsHandler: MethodChannel.MethodCallHandler  {
     }
 
     private fun setFinishOnBackButtonEnabled(call: MethodCall, result: MethodChannel.Result) {
-        SdkConfig.setFinishOnBackButttonEnabled(call.arguments as Boolean)
+        SdkConfig.setFinishOnBackButtonEnabled(call.arguments as Boolean)
         result.success(1)
     }
 
