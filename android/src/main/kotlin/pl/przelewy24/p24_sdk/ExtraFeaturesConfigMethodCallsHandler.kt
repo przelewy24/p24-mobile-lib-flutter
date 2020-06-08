@@ -5,7 +5,7 @@ import io.flutter.plugin.common.MethodChannel
 import pl.przelewy24.p24lib.settings.ExtraFeaturesConfig
 
 class ExtraFeaturesConfigMethodCallsHandler: MethodChannel.MethodCallHandler  {
-    
+
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when(call.method){
             "setRemoteConfigUrl" -> setRemoteConfigUrl(call, result)

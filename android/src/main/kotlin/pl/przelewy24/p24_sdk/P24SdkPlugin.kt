@@ -10,7 +10,7 @@ import io.flutter.plugin.common.MethodChannel
 public class P24SdkPlugin: FlutterPlugin, ActivityAware {
 
   private lateinit var flutterPluginBinding: FlutterPlugin.FlutterPluginBinding
-  
+
   override fun onAttachedToEngine(@NonNull flutterPluginBinding: FlutterPlugin.FlutterPluginBinding) {
     this.flutterPluginBinding = flutterPluginBinding
   }
@@ -19,13 +19,15 @@ public class P24SdkPlugin: FlutterPlugin, ActivityAware {
 
   override fun onAttachedToActivity(binding: ActivityPluginBinding) {
     val binaryMessenger = flutterPluginBinding.binaryMessenger
-    
+
     MethodChannel(binaryMessenger, "p24_sdk")
             .setMethodCallHandler(MethodCallsHandler(binding, flutterPluginBinding.binaryMessenger))
     MethodChannel(binaryMessenger, "p24_sdk/extra_features_config")
             .setMethodCallHandler(ExtraFeaturesConfigMethodCallsHandler())
     MethodChannel(binaryMessenger, "p24_sdk/sdk_config")
             .setMethodCallHandler(SdkConfigMethodCallsHandler())
+    MethodChannel(binaryMessenger, "p24_sdk/p24_sdk_version")
+            .setMethodCallHandler(P24SdkVersionCallsHandler())
   }
 
   override fun onReattachedToActivityForConfigChanges(binding: ActivityPluginBinding) {}
@@ -33,5 +35,5 @@ public class P24SdkPlugin: FlutterPlugin, ActivityAware {
   override fun onDetachedFromActivityForConfigChanges() {}
 
   override fun onDetachedFromActivity() {}
-  
+
 }
