@@ -42,3 +42,7 @@
 ## 1.0.10
 
 * New library file
+
+## 1.0.11
+
+* Fix SdkConfigMethodCallsHandler
