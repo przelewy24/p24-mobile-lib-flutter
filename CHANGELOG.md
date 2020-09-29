@@ -50,3 +50,8 @@
 ## 1.0.12
 
 * Add P24SdkVersion dart class
+
+
+## 1.0.13
+
+* New library file
