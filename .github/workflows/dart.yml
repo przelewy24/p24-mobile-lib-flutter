@@ -4,8 +4,8 @@ on:
     branches:   
       - master
 jobs:
-  release:
-    name: Release new plugin version to pub.dev
+  release-native:
+    name: Release new native library version to pub.dev
     runs-on: ubuntu-latest
     if: startsWith(github.event.commits[0].message, 'library file version')
     container:
@@ -32,6 +32,32 @@ jobs:
           git add pubspec.yaml
           git commit -m "Release version $newVersion" -a
           git push origin master
+      - name: Setup credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          cat <<EOF > ~/.pub-cache/credentials.json
+          {
+            "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
+            "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
+            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+            "expiration": 1570721159347
+          }
+          EOF
+      - name: Publish package
+        run: pub publish -f
+  release:
+    name: Release new plugin version to pub.dev
+    runs-on: ubuntu-latest
+    if: startsWith(github.event.commits[0].message, 'library file version') != true
+    container:
+      image:  google/dart:latest
+    steps:
+      - uses: actions/checkout@master
+      - name: Validate release
+        env:
+          PREV_COMMIT: ${{ github.event.before }}
+        run: ./.github/workflows/validate_release.sh $PREV_COMMIT
       - name: Setup credentials
         run: |
           mkdir -p ~/.pub-cache
