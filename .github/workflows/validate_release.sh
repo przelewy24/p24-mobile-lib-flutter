@@ -7,7 +7,7 @@ versionLib=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //');
 [ -z "$versionLib" ] && echo "Unrecognized lib version from pubspec.yaml!" && exit 1;
 
 #clone project to get last pubspec (prev commit)
-git clone --quiet https://github.com/awochniak/p24-mobile-lib-flutter.git;
+git clone --quiet https://github.com/przelewy24/p24-mobile-lib-flutter.git;
 cd p24-mobile-lib-flutter;
 
 #get library version from pubspec.yaml (prev commit)  
