@@ -18,9 +18,7 @@
 }
 - (void)handleMethodCall:(FlutterMethodCall*)call result:(FlutterResult)result {
         
-  if ([@"getSdkVersion" isEqualToString:call.method]) {
-    result([P24 sdkVersion]);
-  } else if ([@"trnRequest" isEqualToString:call.method]) {
+  if ([@"trnRequest" isEqualToString:call.method]) {
       [executor execute: call.arguments result: result handler: [TrnRequestHandler new]];
   } else if ([@"trnDirect" isEqualToString:call.method]) {
       [executor execute: call.arguments result: result handler: [TrnDirectHandler new]];

@@ -8,6 +8,7 @@
 #import "PassageHandler.h"
 #import "CardHandler.h"
 #import "ApplePayHandler.h"
+#import "SdkVersionMethodHandler.h"
 
 
 @interface P24MethodHandler : NSObject

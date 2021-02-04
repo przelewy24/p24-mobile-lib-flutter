@@ -46,6 +46,8 @@ class _MainPageState extends State<MainPage> {
               Container(height: 16),
               _buildSdkConfigSection(),
               Container(height: 16),
+              _buildSdkVersionSection(),
+              Container(height: 16),
               _buildMethodsSection(),
             ],
           ),
@@ -88,6 +90,20 @@ class _MainPageState extends State<MainPage> {
             });
           },
         )
+      ],
+    );
+  }
+
+  Widget _buildSdkVersionSection() {
+    return SectionCard(
+      title: "SdkVersion",
+      widgets: <Widget>[
+        FutureBuilder<String>(
+          initialData: "",
+          future: P24SdkVersion.value(),
+          builder: (context, snap) {
+            return Text(snap.data);
+        })
       ],
     );
   }

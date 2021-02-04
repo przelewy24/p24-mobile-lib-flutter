@@ -20,6 +20,10 @@
     FlutterMethodChannel* channelSdkConfig = [FlutterMethodChannel methodChannelWithName:@"p24_sdk/sdk_config" binaryMessenger:[registrar messenger]];
     SdkConfigMethodHandler* sdkConfigMethodHandler = [[SdkConfigMethodHandler alloc] init];
     [registrar addMethodCallDelegate: sdkConfigMethodHandler channel:channelSdkConfig];
+    
+    FlutterMethodChannel* channelSdkVersion = [FlutterMethodChannel methodChannelWithName:@"p24_sdk/p24_sdk_version" binaryMessenger:[registrar messenger]];
+    SdkVersionMethodHandler* sdkVersionMethodHandler = [[SdkVersionMethodHandler alloc] init];
+    [registrar addMethodCallDelegate: sdkVersionMethodHandler channel:channelSdkVersion];
 
  }
 

@@ -11,18 +11,11 @@ dependencies:
   flutter:
     sdk: flutter
 
-dev_dependencies:
-  flutter_test:
-    sdk: flutter
-
 flutter:
   plugin:
     platforms:
       android:
         package: pl.przelewy24.p24_sdk
         pluginClass: P24SdkPlugin
-
-
-
-
-
+      ios:
+        pluginClass: P24SdkPlugin
