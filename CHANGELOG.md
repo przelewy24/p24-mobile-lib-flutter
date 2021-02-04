@@ -51,7 +51,6 @@
 
 * Add P24SdkVersion dart class
 
-
 ## 1.0.13
 
 * New library file
@@ -71,3 +70,7 @@
 ## 1.0.17
 
 * New library file
+
+## 1.0.18
+
+* Fix P24SdkVersion and issues with ios
