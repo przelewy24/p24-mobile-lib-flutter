@@ -74,3 +74,7 @@
 ## 1.0.18
 
 * Fix P24SdkVersion and issues with ios
+
+## 1.0.19
+
+* New library file
