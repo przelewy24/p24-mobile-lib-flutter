@@ -69,14 +69,6 @@
 
 @end
 
-@interface P24 : NSObject
-
-+ (NSString *) sdkVersion;
-+ (void) startRegisterCard:(P24RegisterCardParams *)params inViewController:(UIViewController *)viewController delegate:(id<P24RegisterCardDelegate>) delegate;
-+ (void) startRpc:(P24RpcParams *) params inViewController:(UIViewController *) viewController delegate:(id<P24RpcDelegate>) delegate;
-
-@end
-
 @interface P24SdkConfig : NSObject
 
 + (BOOL) isCertificatePinningEnabled;
@@ -88,8 +80,6 @@
 + (void) setSplitPaymentEnabled: (BOOL) isEnabled;
 
 @end
-
-
 
 @interface P24PassageItem : NSObject
 
@@ -235,14 +225,23 @@
 
 @end
 
-@interface P24 (Secure)
 
+
+
+@interface P24 : NSObject
+
++ (NSString *) sdkVersion;
++ (void) startRegisterCard:(P24RegisterCardParams *)params inViewController:(UIViewController *)viewController delegate:(id<P24RegisterCardDelegate>) delegate;
++ (void) startRpc:(P24RpcParams *) params inViewController:(UIViewController *) viewController delegate:(id<P24RpcDelegate>) delegate;
 + (void)startTrnRequest:(P24TrnRequestParams *)params inViewController:(UIViewController *)parent delegate:(id<P24TransferDelegate>) delegate;
-
 + (void)startTrnDirect:(P24TrnDirectParams *)params inViewController:(UIViewController *)parent delegate:(id<P24TransferDelegate>) delegate;
-
 + (void)startExpress:(P24ExpressParams *)params inViewController:(UIViewController *)parent delegate:(id<P24TransferDelegate>) delegate;
-
 + (void)startApplePay:(P24ApplePayParams *)params inViewController:(UIViewController *)parent delegate:(id<P24ApplePayDelegate>) delegate;
+
+@end
+
+
+
+@interface P24 (Secure)
 
 @end
