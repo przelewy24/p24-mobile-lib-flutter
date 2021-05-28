@@ -47,27 +47,7 @@ Params settings should take place before call any methods of P24 library. Change
 await SdkConfig.setFinishOnBackButtonEnabled(true);
 ```
 
-## 4. Before call any library methods
-
-Before call any library methods it is necessary to define `merchant` in P24 mobile lib. `Merchant` is the object implementing interface `P24Merchant`, f.e:
-```dart
-class DefaultMerchant implements P24Merchant {
-  @override
-  Map<Environment, String> get crc => {
-    Environment.SANDBOX : "default_merchant_sandbox_crc",
-    Environment.PRODUCTION : "default_merchant_production_crc"
-  };
-
-  @override
-  int get id => merchant_id;
-}
-```
-Above object should be passed to P24 mobile library by call below method:
-```dart
-await P24Config.setP24Merchant(DefaultMerchant());
-```
-
-## 5. trnRequest transaction call
+## 4. trnRequest transaction call
 
 During the registration with the "trnRegister" method, additional parameters should be provided:
 - `p24_mobile_lib=1`
@@ -101,7 +81,7 @@ P24SDK.trnRequest(params).then((response) {
 
 Response is `SdkResult` object consist of `payload` field (optional, containing error code) and `SdkStatus` object receiving one of three type: **success** | **error** | **cancel**
 
-## 6. trnDirect transaction call
+## 5. trnDirect transaction call
 
 Firstly, `TrnDirectParams` object should be created. Object contructor looks like:
 
@@ -125,7 +105,7 @@ P24SDK.trnDirect(params).then((response) {
 
 Object `SdkResult` is returned as response (described at paragh 4).
 
-## 7. Express transaction call
+## 6. Express transaction call
 
 Firstly, `ExpressParams` object should be created:
 
@@ -145,7 +125,7 @@ P24SDK.transferExpress(params).then((response) {
 
 Object `SdkResult` is returned as response (described at paragh 4).
 
-## 8. Passage 2.0 transaction call
+## 7. Passage 2.0 transaction call
 
 Firstly, `TrnDirectParams` object should be created, similarly to TrnDirect, adding `PassageCart` object:
 
@@ -179,7 +159,7 @@ trnDirectParams.passageCart = cart;
 
 Transaction call and parsing result are processed same as in `trnDirect` case.
 
-## 9. Google Pay (Android)
+## 8. Google Pay (Android)
 
 The data flow process using this payment method looks as follows:
 
@@ -201,7 +181,7 @@ P24SDK.googlePay(params).then((value) {
 
 Object `SdkResult` is returned as response (described at paragh 4).
 
-## 10. Apple Pay (iOS)
+## 9. Apple Pay (iOS)
 
 The data flow process using this payment method looks as follows:
 
