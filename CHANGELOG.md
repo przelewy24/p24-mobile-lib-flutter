@@ -94,3 +94,7 @@
 ## 1.0.23
 
 * New library file
+
+## 1.0.24
+
+* New library file
