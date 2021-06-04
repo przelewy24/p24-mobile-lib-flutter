@@ -102,3 +102,7 @@
 ## 1.0.25
 
 * New library file
+
+## 1.0.26
+
+* New library file
