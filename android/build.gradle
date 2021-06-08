@@ -1,5 +1,6 @@
 group 'pl.przelewy24.p24_sdk'
 version '1.0-SNAPSHOT'
+apply from: 'https://mobile.przelewy24.pl/p24lib.gradle'
 
 buildscript {
     ext.kotlin_version = '1.3.50'
@@ -18,6 +19,7 @@ rootProject.allprojects {
     repositories {
         google()
         jcenter()
+        p24()
     }
 }
 
@@ -39,7 +41,7 @@ android {
 }
 
 dependencies {
-    implementation fileTree(include: '*.aar', dir: 'p24Lib/')
+    implementation "pl.przelewy24:p24lib:+"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:+'
     implementation 'com.google.android.gms:play-services-wallet:16.+'
