@@ -7,7 +7,7 @@ class BaseFormModal extends StatelessWidget {
   final String title;
   final WidgetBuilder builder;
 
-  const BaseFormModal({Key key, this.title, this.builder}) : super(key: key);
+  const BaseFormModal({required this.title, required this.builder});
 
   @override
   Widget build(BuildContext context) {
@@ -34,9 +34,10 @@ class BaseFormModal extends StatelessWidget {
 
 }
 
-void showFormDialog(BuildContext context, String title, WidgetBuilder builder) {
-  showDialog(context: context, builder: (c) => Dialog(
-    child: BaseFormModal(title: title, builder: builder),
-  ));
-
+void showFormDialog(BuildContext? context, String title, WidgetBuilder builder) {
+  if(context != null) {
+    showDialog(context: context, builder: (c) => Dialog(
+      child: BaseFormModal(title: title, builder: builder),
+    ));
+  }
 }

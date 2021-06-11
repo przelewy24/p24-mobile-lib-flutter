@@ -6,7 +6,7 @@ class ApplePayForm extends StatefulWidget {
 
   final bool isSandboxEnabled;
 
-  ApplePayForm({this.isSandboxEnabled});
+  ApplePayForm({required this.isSandboxEnabled});
 
   @override
   _ApplePayFormState createState() => _ApplePayFormState();
@@ -15,7 +15,7 @@ class ApplePayForm extends StatefulWidget {
 
 class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegistrar {
 
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
   int _amount = 1;
   String _appleMerchantId = "merchant.Przelewy24.sandbox";
 
@@ -30,7 +30,7 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
           decoration: InputDecoration(labelText: "Amount"),
           onChanged: (currentValue) {
             setState(() {
-              _amount = int.tryParse(currentValue);
+              _amount = int.parse(currentValue);
             });
           },
         ),
@@ -43,7 +43,7 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
             });
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startApplePay();
@@ -67,6 +67,12 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
         isSandbox: widget.isSandboxEnabled
     );
 
+    P24SDK.applePay(params, this).then((value) {
+      setState(() {
+        _sdkResult = value;
+      });
+    });
+
 //		ApplePayParams params = ApplePayParams.withMultipleItems(
 //			appleMerchantId: _appleMerchantId,
 //			items: _buildApplePayItems(),
@@ -74,18 +80,13 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
 //			isSandbox: widget.isSandboxEnabled
 //		);
 
-    P24SDK.applePay(params, this).then((value) {
-      setState(() {
-        _sdkResult = value;
-      });
-    });
   }
 
-  List<PaymentItem> _buildApplePayItems() {
-  	PaymentItem firstItem = PaymentItem(description: "first item", amount: 12);
-		PaymentItem secondItem = PaymentItem(description: "second item", amount: 18);
-		return [firstItem, secondItem];
-	}
+  // List<PaymentItem> _buildApplePayItems() {
+  // 	PaymentItem firstItem = PaymentItem(description: "first item", amount: 12);
+	// 	PaymentItem secondItem = PaymentItem(description: "second item", amount: 18);
+	// 	return [firstItem, secondItem];
+	// }
 
   @override
   Future<ApplePayExchangeResult> exchange(String methodRefId) {

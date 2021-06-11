@@ -244,4 +244,5 @@ The `ApplePayTransactionRegistrar` interface allows you to implement the exchang
     }
 ```
 
+
 Object `SdkResult` is returned as response (described at paragh 4).

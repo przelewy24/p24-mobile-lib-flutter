@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class GooglePayParams {
   int _merchantId;
   int _amount;
@@ -7,9 +5,9 @@ class GooglePayParams {
   bool _isSandbox;
 
   GooglePayParams(
-      {@required int merchantId,
-      @required int amount,
-      @required String currency,
+      {required int merchantId,
+      required int amount,
+      required String currency,
       bool isSandbox = true})
       : this._merchantId = merchantId,
         this._amount = amount,

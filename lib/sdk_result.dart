@@ -1,13 +1,13 @@
 class SdkResult {
   final SdkStatus _status;
-  final String _payload;
+  final String? _payload;
 
-  SdkResult({SdkStatus status, String payload})
+  SdkResult({required SdkStatus status, String? payload})
       : this._status = status,
         this._payload = payload;
 
   SdkStatus get status => _status;
-  String get payload => _payload;
+  String? get payload => _payload;
 
   factory SdkResult.fromMap(Map<dynamic, dynamic> map) {
     return SdkResult(
@@ -15,20 +15,12 @@ class SdkResult {
         payload: map["payload"]);
   }
 
-  static SdkStatus getStatusFrom(String result) {
+  static SdkStatus getStatusFrom(String? result) {
     switch (result) {
-      case "cancel":
-        return SdkStatus.cancel;
-        break;
-      case "success":
-        return SdkStatus.success;
-        break;
-      case "error":
-        return SdkStatus.error;
-        break;
-      default:
-        return SdkStatus.cancel;
-        break;
+      case "cancel": return SdkStatus.cancel;
+      case "success": return SdkStatus.success;
+      case "error": return SdkStatus.error;
+      default: return SdkStatus.cancel;
     }
   }
 }

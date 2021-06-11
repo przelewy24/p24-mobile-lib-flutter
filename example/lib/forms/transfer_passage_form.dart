@@ -11,7 +11,7 @@ class TransferPassageForm extends StatefulWidget {
   final int merchantId;
   final String crc;
 
-  TransferPassageForm({this.isSandboxEnabled, this.merchantId, this.crc});
+  TransferPassageForm({required this.isSandboxEnabled, required this.merchantId, required this.crc});
 
   @override
   _TransferPassageFormState createState() => _TransferPassageFormState();
@@ -21,7 +21,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
 
   String _description = "Mobile Payment Test";
   String _method = "0";
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
 
   @override
   Widget build(BuildContext context) {
@@ -32,7 +32,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
         TextFormField(
           decoration: InputDecoration(labelText: "Method number"),
           inputFormatters: [
-            WhitelistingTextInputFormatter.digitsOnly
+            FilteringTextInputFormatter.digitsOnly
           ],
           keyboardType: TextInputType.number,
           onChanged: (currentValue) {
@@ -50,7 +50,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
             });
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startTransferPassage();

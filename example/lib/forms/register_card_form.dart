@@ -14,7 +14,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
 
   static const REGISTER_CARD_URL = "https://sandbox.przelewy24.pl/bundle/card?lang=PL&merchantId=46862&userId=y8vp5sf5wf&sessionId=1&sign=ce91e29bfdf708c2989f610cc955b5dc4b3fdb5619762d4332550c37d6e6a7b5f049ca3c9ad1e89977a7e82287bacdef";
 
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
 
   String _number = "1111111111111111";
   int _expiryMonth = 4;
@@ -30,7 +30,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         TextFormField(
           initialValue: _number,
           decoration: InputDecoration(labelText: "Card Number"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
             setState(() {
@@ -41,29 +41,29 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         TextFormField(
           initialValue: _expiryYear.toString(),
           decoration: InputDecoration(labelText: "Expiry year"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
             setState(() {
-              _expiryYear = int.tryParse(currentValue);
+              _expiryYear = int.parse(currentValue);
             });
           },
         ),
         TextFormField(
           initialValue: _expiryMonth.toString(),
           decoration: InputDecoration(labelText: "Expiry month"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
             setState(() {
-              _expiryMonth = int.tryParse(currentValue);
+              _expiryMonth = int.parse(currentValue);
             });
           },
         ),
         TextFormField(
           initialValue: _cvv,
           decoration: InputDecoration(labelText: "CVV"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
             setState(() {
@@ -71,7 +71,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
             });
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startRegisterCard();

@@ -1,4 +1,3 @@
-import 'package:flutter/foundation.dart';
 import 'package:p24_sdk/transfer/transaction_params.dart';
 
 class TrnDirectParams {
@@ -6,7 +5,7 @@ class TrnDirectParams {
   final bool _isSandbox;
 
   TrnDirectParams(
-      {@required TransactionParams transactionParams, bool isSandbox = true})
+      {required TransactionParams transactionParams, bool isSandbox = true})
       : this._transactionParams = transactionParams,
         this._isSandbox = isSandbox;
 

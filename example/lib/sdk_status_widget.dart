@@ -5,10 +5,10 @@ import 'package:p24_sdk/p24_sdk.dart';
 
 class SdkStatusWidget extends StatefulWidget {
 
-  final SdkResult sdkResult;
+  final SdkResult? sdkResult;
   final String prefix;
 
-  SdkStatusWidget({this.sdkResult, this.prefix});
+  SdkStatusWidget({required this.sdkResult, required this.prefix});
 
   @override
   _SdkStatusWidgetState createState() => _SdkStatusWidgetState();
@@ -17,8 +17,8 @@ class SdkStatusWidget extends StatefulWidget {
 
 class _SdkStatusWidgetState extends State<SdkStatusWidget> {
 
-  Color _statusColor;
-  String _message;
+  Color _statusColor = Colors.transparent;
+  String _message = "";
 
   @override
   Widget build(BuildContext context) {
@@ -62,22 +62,22 @@ class _SdkStatusWidgetState extends State<SdkStatusWidget> {
     );
   }
 
-  void _updateStatusSection({@required Color color, @required String message}) {
+  void _updateStatusSection({required Color color, required String message}) {
     setState(() {
       _statusColor = color;
       _message = message;
     });
   }
 
-  void _checkSdkResult(SdkResult value) {
-    switch (value.status) {
+  void _checkSdkResult(SdkResult? value) {
+    switch (value?.status) {
       case SdkStatus.success:
-        _updateStatusSection(color: Colors.green, message: "${widget.prefix}: success, ${value.payload ?? ""}");
+        _updateStatusSection(color: Colors.green, message: "${widget.prefix}: success, ${value?.payload ?? ""}");
         break;
       case SdkStatus.error:
-        _updateStatusSection(color: Colors.red, message: "${widget.prefix}: error, ${value.payload ?? ""}");
+        _updateStatusSection(color: Colors.red, message: "${widget.prefix}: error, ${value?.payload ?? ""}");
         break;
-      case SdkStatus.cancel:
+      default:
         _updateStatusSection(color: Colors.orange, message: "${widget.prefix}: cancel");
         break;
     }

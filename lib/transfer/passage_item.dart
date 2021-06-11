@@ -1,5 +1,3 @@
-import 'package:flutter/cupertino.dart';
-
 class PassageItem {
   final String _name;
   final String _description;
@@ -10,13 +8,13 @@ class PassageItem {
   final _targetPosId;
 
   PassageItem(
-      {@required String name,
-      @required String description,
-      @required int quantity,
-      @required int price,
-      @required int number,
-      @required int targetAmount,
-      @required int targetPosId})
+      {required String name,
+      required String description,
+      required int quantity,
+      required int price,
+      required int number,
+      required int targetAmount,
+      required int targetPosId})
       : this._name = name,
         this._description = description,
         this._quantity = quantity,

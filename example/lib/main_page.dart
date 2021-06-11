@@ -73,25 +73,31 @@ class _MainPageState extends State<MainPage> {
         FutureBuilder<bool>(
           initialData: false,
           future: SdkConfig.getCertificatePinningEnabled(),
-          builder: (context, snap){
-            return _buildCheckboxOption("SSL pinning", snap.data, (value) async {
+          builder: (context, snap) => emptyWidgetIfNull(snap.data, () => _buildCheckboxOption(
+            "SSL Pinning", snap.data!, (value) async {
               await SdkConfig.setCertificatePinningEnabled(value);
               setState((){});// rebuild to load new value
-            });
-          },
+            })
+          )
         ),
         FutureBuilder<bool>(
           initialData: false,
           future: SdkConfig.getFinishOnBackButtonEnabled(),
-          builder: (context, snap){
-            return _buildCheckboxOption("Finish on back button", snap.data, (value) async {
+          builder: (context, snap) => emptyWidgetIfNull(snap.data, () => _buildCheckboxOption(
+              "Finish on back button", snap.data!, (value) async {
               await SdkConfig.setFinishOnBackButtonEnabled(value);
               setState((){});// rebuild to load new value
-            });
-          },
+            })
+          )
         )
       ],
     );
+  }
+
+  Widget emptyWidgetIfNull(dynamic value, Widget builder()) {
+    return value == null
+        ? SizedBox.shrink()
+        : builder();
   }
 
   Widget _buildSdkVersionSection() {
@@ -101,9 +107,8 @@ class _MainPageState extends State<MainPage> {
         FutureBuilder<String>(
           initialData: "",
           future: P24SdkVersion.value(),
-          builder: (context, snap) {
-            return Text(snap.data);
-        })
+          builder: (context, snap) => emptyWidgetIfNull(snap.data, () => Text(snap.data!))
+        )
       ],
     );
   }
@@ -113,7 +118,11 @@ class _MainPageState extends State<MainPage> {
       height: 32,
       child: Row(
         children: <Widget>[
-          SizedBox(width: 24, height: 24, child: Checkbox(value: isChecked, onChanged: onChanged)),
+          SizedBox(width: 24, height: 24, child: Checkbox(value: isChecked, onChanged: (value) => {
+            if(value != null){
+              onChanged(value)
+            }
+          })),
           Container(width: 8),
           Text(label)
         ],
@@ -125,11 +134,11 @@ class _MainPageState extends State<MainPage> {
     return SectionCard(
       title: "Actions",
       widgets: <Widget>[
-        RaisedButton(child: Text("Transfer TrnRequest"), onPressed: _showTrnRequestBottomSheet),
-        RaisedButton(child: Text("Transfer TrnDirect"), onPressed: _showTrnDirectBottomSheet),
-        RaisedButton(child: Text("Transfer Express"), onPressed: _showExpressBottomSheet),
-        RaisedButton(child: Text("Transfer Passage"), onPressed: _showPassageBottomSheet),
-        RaisedButton(child: Text("Register Card"), onPressed: _showRegisterCardBottomSheet),
+        ElevatedButton(child: Text("Transfer TrnRequest"), onPressed: _showTrnRequestBottomSheet),
+        ElevatedButton(child: Text("Transfer TrnDirect"), onPressed: _showTrnDirectBottomSheet),
+        ElevatedButton(child: Text("Transfer Express"), onPressed: _showExpressBottomSheet),
+        ElevatedButton(child: Text("Transfer Passage"), onPressed: _showPassageBottomSheet),
+        ElevatedButton(child: Text("Register Card"), onPressed: _showRegisterCardBottomSheet),
         _get3thPartWalletButton()
       ],
     );
@@ -170,9 +179,9 @@ class _MainPageState extends State<MainPage> {
 
   Widget _get3thPartWalletButton() {
     if(Platform.isAndroid) {
-      return RaisedButton(child: Text("Google Pay"), onPressed: () => _showGooglePayBottomSheet());
+      return ElevatedButton(child: Text("Google Pay"), onPressed: () => _showGooglePayBottomSheet());
     } else if(Platform.isIOS) {
-      return RaisedButton(child: Text("Apple Pay"), onPressed: () => _showApplePayBottomSheet());
+      return ElevatedButton(child: Text("Apple Pay"), onPressed: () => _showApplePayBottomSheet());
     } else {
       return Container();
     }

@@ -7,7 +7,7 @@ class TrnRequestForm extends StatefulWidget {
 
   final bool isSandboxEnabled;
 
-  TrnRequestForm({this.isSandboxEnabled});
+  TrnRequestForm({required this.isSandboxEnabled});
 
   @override
   _TrnRequestFormState createState() => _TrnRequestFormState();
@@ -17,7 +17,7 @@ class TrnRequestForm extends StatefulWidget {
 class _TrnRequestFormState extends State<TrnRequestForm> {
 
   String _token = "";
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _TrnRequestFormState extends State<TrnRequestForm> {
         Container(
           height: 16,
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startTransferTrnRequest();

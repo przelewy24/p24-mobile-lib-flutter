@@ -5,7 +5,7 @@ class BaseModalFormToolbar extends StatelessWidget {
 
   final String title;
 
-  BaseModalFormToolbar({this.title});
+  BaseModalFormToolbar({required this.title});
 
   @override
   Widget build(BuildContext context) {

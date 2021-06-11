@@ -12,11 +12,14 @@ class SdkConfig {
     await _channel.invokeMethod("setFinishOnBackButtonEnabled", value);
   }
 
-  static Future<bool> getCertificatePinningEnabled() {
-    return _channel.invokeMethod("getCertificatePinningEnabled");
+  static Future<bool> getCertificatePinningEnabled() async {
+    var isCertificatePinningEnabled = await _channel.invokeMethod<bool>("getCertificatePinningEnabled");
+    return isCertificatePinningEnabled!;
   }
 
-  static Future<bool> getFinishOnBackButtonEnabled() {
-    return _channel.invokeMethod("getFinishOnBackButtonEnabled");
+  static Future<bool> getFinishOnBackButtonEnabled() async {
+    var isFinishOnBackButtonEnabled = await _channel.invokeMethod<bool>("getFinishOnBackButtonEnabled");
+    return isFinishOnBackButtonEnabled!;
   }
+
 }

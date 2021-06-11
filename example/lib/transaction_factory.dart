@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:p24_sdk/p24_sdk.dart';
 
 class TransactionFactory {
@@ -6,7 +5,7 @@ class TransactionFactory {
   static const FIRST_BILLING_PASSAGE_ACCOUNT = 51986;
   static const SECOND_BILLING_PASSAGE_ACCOUNT = 51987;
 
-  static TransactionParams getTestTransaction({@required merchantId, @required String crc, @required int amount, @required String description, int method}){
+  static TransactionParams getTestTransaction({required merchantId, required String crc, required int amount, required String description, int? method}){
     return TransactionParams(
       merchantId: merchantId,
       crc: crc,
@@ -21,7 +20,7 @@ class TransactionFactory {
   }
 
   static PassageCart getPassageCart() {
-    List<PassageItem> _items = List<PassageItem>();
+    List<PassageItem> _items = <PassageItem>[];
 
     for (int i = 0; i<10; i++) {
       int price = 2 * (100 + i);

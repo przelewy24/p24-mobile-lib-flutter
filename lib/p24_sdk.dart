@@ -18,7 +18,6 @@ export 'package:p24_sdk/transfer/transaction_params.dart';
 export 'package:p24_sdk/transfer/trn_direct_params.dart';
 export 'package:p24_sdk/transfer/trn_request_params.dart';
 
-export 'extra_features_config.dart';
 export 'p24_sdk_version.dart';
 export 'payment_methods.dart';
 export 'sdk_config.dart';

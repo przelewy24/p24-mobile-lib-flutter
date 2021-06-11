@@ -4,7 +4,7 @@ class CardData {
   final int _expiryYear;
   final String _cvv;
 
-  CardData({String number, int expiryMonth, int expiryYear, String cvv})
+  CardData({required String number, required int expiryMonth, required int expiryYear, required String cvv})
       : this._number = number,
         this._expiryMonth = expiryMonth,
         this._expiryYear = expiryYear,
@@ -16,7 +16,7 @@ class CardData {
   String get number => _number;
 
   Map<String, dynamic> toMap() {
-    Map<String, dynamic> cardData = {};
+  Map<String, dynamic> cardData = {};
 
     putIfValueNotNull("cvv", _cvv, cardData);
     putIfValueNotNull("expiryYear", _expiryYear, cardData);

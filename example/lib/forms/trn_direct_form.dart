@@ -12,7 +12,7 @@ class TrnDirectForm extends StatefulWidget {
   final int merchantId;
   final String crc;
 
-  TrnDirectForm({this.isSandboxEnabled, this.merchantId, this.crc});
+  TrnDirectForm({required this.isSandboxEnabled, required this.merchantId, required this.crc});
 
   @override
   _TrnDirectFormState createState() => _TrnDirectFormState();
@@ -23,7 +23,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
   String _description = "Mobile Payment Test";
   String _method = "0";
   String _amount = "1";
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
 
   @override
   Widget build(BuildContext context) {
@@ -34,7 +34,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
         TextFormField(
           initialValue: _amount.toString(),
           decoration: InputDecoration(labelText: "Amount (in gr)"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
             setState(() {
@@ -44,7 +44,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
         ),
         TextFormField(
           decoration: InputDecoration(labelText: "Method number"),
-          inputFormatters: [WhitelistingTextInputFormatter.digitsOnly],
+          inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue) {
             setState(() {
@@ -61,7 +61,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
             });
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startTransferTrnDirect();
@@ -80,7 +80,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
     TransactionParams transactionParams = TransactionFactory.getTestTransaction(
         merchantId: widget.merchantId,
         crc: widget.crc,
-        amount: int.tryParse(_amount),
+        amount: int.parse(_amount),
         description: _description,
         method: int.tryParse(_method)
     );

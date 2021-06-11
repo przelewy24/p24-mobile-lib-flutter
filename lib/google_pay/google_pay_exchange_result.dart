@@ -4,5 +4,5 @@ class GooglePayExchangeCanceled implements GooglePayExchangeResult {}
 
 class GooglePayTransactionRegistered implements GooglePayExchangeResult {
   final String transactionToken;
-  GooglePayTransactionRegistered({this.transactionToken});
+  GooglePayTransactionRegistered({required this.transactionToken});
 }

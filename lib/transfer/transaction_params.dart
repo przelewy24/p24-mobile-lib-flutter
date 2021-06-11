@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:p24_sdk/transfer/passage_cart.dart';
 
 class TransactionParams {
@@ -11,45 +10,45 @@ class TransactionParams {
   final String _email;
   final String _country;
 
-  String _client;
-  String _address;
-  String _zip;
-  String _city;
-  String _phone;
-  String _language;
-  int _method;
-  String _urlStatus;
-  int _timeLimit;
-  int _channel;
-  int _shipping;
-  String _transferLabel;
-  String _methodRefId;
+  String? _client;
+  String? _address;
+  String? _zip;
+  String? _city;
+  String? _phone;
+  String? _language;
+  int? _method;
+  String? _urlStatus;
+  int? _timeLimit;
+  int? _channel;
+  int? _shipping;
+  String? _transferLabel;
+  String? _methodRefId;
 
-  PassageCart passageCart;
+  PassageCart? passageCart;
 
   TransactionParams(
-      {@required int merchantId,
-      @required String crc,
-      @required String sessionId,
-      @required int amount,
-      @required String currency,
-      @required String description,
-      @required String email,
-      @required String country,
-      String client,
-      String address,
-      String zip,
-      String city,
-      String phone,
-      String language,
-      int method,
-      String urlStatus,
-      int timeLimit,
-      int channel,
-      int shipping,
-      String transferLabel,
-      String methodRefId,
-      PassageCart passageCart})
+      {required int merchantId,
+      required String crc,
+      required String sessionId,
+      required int amount,
+      required String currency,
+      required String description,
+      required String email,
+      required String country,
+      String? client,
+      String? address,
+      String? zip,
+      String? city,
+      String? phone,
+      String? language,
+      int? method,
+      String? urlStatus,
+      int? timeLimit,
+      int? channel,
+      int? shipping,
+      String? transferLabel,
+      String? methodRefId,
+      PassageCart? passageCart})
       : this._merchantId = merchantId,
         this._crc = crc,
         this._sessionId = sessionId,
@@ -80,19 +79,19 @@ class TransactionParams {
   String get description => _description;
   String get email => _email;
   String get country => _country;
-  String get client => _client;
-  String get address => _address;
-  String get zip => _zip;
-  String get city => _city;
-  String get phone => _phone;
-  String get language => _language;
-  int get method => _method;
-  String get urlStatus => _urlStatus;
-  int get timeLimit => _timeLimit;
-  int get channel => _channel;
-  int get shipping => _shipping;
-  String get transferLabel => _transferLabel;
-  String get methodRefId => _methodRefId;
+  String? get client => _client;
+  String? get address => _address;
+  String? get zip => _zip;
+  String? get city => _city;
+  String? get phone => _phone;
+  String? get language => _language;
+  int? get method => _method;
+  String? get urlStatus => _urlStatus;
+  int? get timeLimit => _timeLimit;
+  int? get channel => _channel;
+  int? get shipping => _shipping;
+  String? get transferLabel => _transferLabel;
+  String? get methodRefId => _methodRefId;
 
   Map<String, dynamic> toMap() {
     Map<String, dynamic> transactionParams = {};
@@ -119,7 +118,7 @@ class TransactionParams {
     putIfValueNotNull("transferLabel", _transferLabel, transactionParams);
     putIfValueNotNull("methodRefId", _methodRefId, transactionParams);
     putIfValueNotNull("passageCart",
-        (passageCart != null) ? passageCart.toMap() : null, transactionParams);
+        (passageCart != null) ? passageCart!.toMap() : null, transactionParams);
 
     return transactionParams;
   }

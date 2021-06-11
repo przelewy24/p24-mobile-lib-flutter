@@ -7,7 +7,7 @@ class TransferExpressForm extends StatefulWidget {
 
   final int merchantId;
 
-  TransferExpressForm({this.merchantId});
+  TransferExpressForm({required this.merchantId});
 
   @override
   _TransferExpressFormState createState() => _TransferExpressFormState();
@@ -15,7 +15,7 @@ class TransferExpressForm extends StatefulWidget {
 
 class _TransferExpressFormState extends State<TransferExpressForm> {
 
-  SdkResult _sdkResult;
+  SdkResult? _sdkResult;
   String _expressUrl = "https://e.przelewy24.pl/ESGByXP2S1SMxDm";
 
   @override
@@ -33,7 +33,7 @@ class _TransferExpressFormState extends State<TransferExpressForm> {
             });
           },
         ),
-        RaisedButton(
+        ElevatedButton(
           child: Text("START"),
           onPressed: () {
             _startTransferExpress();
@@ -48,8 +48,6 @@ class _TransferExpressFormState extends State<TransferExpressForm> {
 
   void _startTransferExpress() async {
     setState(() => _sdkResult = null);
-
-    await ExtraFeaturesConfig.enableExpressFeatures(widget.merchantId.toString());
     ExpressParams params = ExpressParams(url: _expressUrl);
 
     P24SDK.transferExpress(params).then((value) {
