@@ -65,10 +65,10 @@ This parameters allows Przelewy24 to classify the transaction as a mobile transa
 - `p24_method` – if a given transaction in the library is to have a specific, preset method of payment, this method must be selected during the registration
 - `p24_url_status` - the address to be used for transaction verification by the partner’s server once the payment process in the mobile library is finished
 
-The transaction parameters must be set using the token of a transaction registered earlier. Optionally, the environment may be set with `Environment.PRODUCTION` or `Environment.SANDBOX` value (default `Environment.PRODUCTION`):
+The transaction parameters must be set using the token of a transaction registered earlier. Optionally, you could set `isSandbox` flag depending on transaction environment (default `isSandbox` param is set to `false`):
 
 ```dart
-TrnRequestParams params = TrnRequestParams(token: _token, environment: _environment);
+TrnRequestParams params = TrnRequestParams(token: _token, isSandbox: true);
 ```
 
 Next, call the `trnRequest` method:
@@ -83,19 +83,27 @@ Response is `SdkResult` object consist of `payload` field (optional, containing 
 
 ## 5. trnDirect transaction call
 
-Firstly, `TrnDirectParams` object should be created. Object contructor looks like:
+Firstly, `TransactionParams` object should be created. Object contructor looks like:
 
 ```dart
-TrnDirectParams({@required String sessionId, @required int amountInGr, 
-@required String currency,@required String description, @required String email, @required String country,
-String client, String address, String zip, String city, String phone, String language, int method,
-String urlStatus, int timeLimit, int channel, int shipping, String transferLabel, String methodRefId,
-PassageCart passageCart, Environment environment, P24Merchant merchant})
+TransactionParams({@required int merchantId, @required String crc,
+  @required String sessionId, @required int amount,
+  @required String currency, @required String description,
+  @required String email, @required String country,
+  String client, String address, String zip, String city, String phone,
+  String language, int method, String urlStatus, int timeLimit,
+  int channel, int shipping, String transferLabel, String methodRefId, PassageCart passageCart})
 ```
 
-Params marked with `@required` adnotations are mandatory, which must be filled. Another params are optional. PassageCart object should be passed in passage transaction (paragraph 7). Environment object, like in TrnRequest case, can be set with `Environment.PRODUCTION` oraz `Environment.SANDBOX` value. `P24Merchant` object allows override the default library merchant set in the library configuration to other for a given transaction.
+Params marked with `@required` adnotations are mandatory, which must be filled. Another params are optional. PassageCart object should be passed in passage transaction (paragraph 7). 
 
-After creation of `TrnDirectParams` object, call the `TrnDirectMethod`:
+After creation of `TransactionParams` object, should be created another object with params for transaction call, suitable for mentioned method - optionally, transaction can be called on sandbox environment.
+
+```dart
+TrnDirectParams params = TrnDirectParams(transactionParams: transactionParams, isSandbox: true);
+```
+
+At the end, call the `TrnDirectMethod` with `TrnDirectParams`:
 
 ```dart
 P24SDK.trnDirect(params).then((response) {
@@ -165,18 +173,37 @@ The data flow process using this payment method looks as follows:
 
 ![](img/gpay_eng.png) 
 
-After selecting GooglePay method, seller application should send request for tokenised payer data to Google. After receiving the callback, tokenised data should be passed as value of params `p24_method_ref_id` to seller backend in registration transaction request. Transaction registration should take place in accordance with the documentation: **[https://docs.przelewy24.pl/Google_Pay](https://docs.przelewy24.pl/Google_Pay)**. After registering the transaction, seller app should call P24 GooglePay method from mobile library with received token and proper environment:
+To use the Google Pay payment you must first make an additional configuration of the project according to official Google documentation:
+
+**[https://developers.google.com/pay/api/android/overview](https://developers.google.com/pay/api/android/overview)**
+
+To initiate a transaction, you must pass the transaction parameters and the `GooglePayTransactionRegistrar` object that is used to register the transaction:
 
 ```dart
-GooglePay params = GooglePay(
-    token: _token,
-    environment: _getEnvironment()
+GooglePayParams params = GooglePayParams(
+    merchantId: MERCHANT_ID,
+    amount: AMOUNT_IN_GR,
+    currency: CURRENCY,
+    isSandbox: IS_SANDBOX
 );
-
-
-P24SDK.googlePay(params).then((value) {
+P24SDK.googlePay(params, getGooglePayTransactionRegistrar()).then((response) {
     //handle response
 });
+```
+
+Transaction registration should take place in accordance with the documentation:
+
+**[https://docs.przelewy24.pl/Google_Pay](https://docs.przelewy24.pl/Google_Pay)**
+
+The `GooglePayTransactionRegistrar` interface allows you to implement the exchange of the token received from Google Pay into the P24 transaction token. When the `exchange` method is called, communicate with the P24 servers, pass the Google Pay payment token as the `p24_method_ref_id` param, and then pass the transaction token to the library using the callback:
+
+```dart
+@override
+    Future<GooglePayExchangeResult> exchange(String methodRefId) {
+        //In this place your backend should register transaction in P24 and retrieve transaction token.
+        var result = GooglePayTransactionRegistered(transactionToken: "CD77A8A04F-3E83BC-7C1044-0EFF8933DF");
+        return Future.value(result);
+    }
 ```
 
 Object `SdkResult` is returned as response (described at paragh 4).
@@ -244,5 +271,46 @@ The `ApplePayTransactionRegistrar` interface allows you to implement the exchang
     }
 ```
 
-
 Object `SdkResult` is returned as response (described at paragh 4).
+
+## 10. Card Register
+
+P24 mobile library enable card registration in P24 system. Firstly, you need to create `CardData` object:
+
+```dart
+CardData cardData = CardData(
+    number: CARD_NUMBER,
+    cvv: CVV,
+    expiryMonth: EXPIRY_MONTH,
+    expiryYear: EXPIRY_YEAR
+);
+```
+
+Then, create `RegisterCardParams` object. `RegisterCardParams` object has two kinds of initialization.
+
+The default contructor only requires URL:
+
+```dart
+RegisterCardParams params = RegisterCardParams(
+    url: REGISTER_CARD_URL
+);
+```
+
+The second, static, gives possibility to pass previously filled card data with URL received from P24 backend: 
+
+```dart
+RegisterCardParams params = RegisterCardParams.prefilled(
+    cardData: cardData,
+    url: REGISTER_CARD_URL
+);
+```
+
+In the last step, it is neccessary to invoke `registerCard` method:
+
+```dart
+P24SDK.registerCard(params).then((response){
+    //handle response
+});
+```
+
+Response is object of type `SdkResult`, consisting of `SdkStatus` object, taking one of three values: **success** | **error** | **cancel** and `payload` field, which contains registrated card token (when `SdkResult` is success) or error code (when `SdkResult` is error).

@@ -48,27 +48,7 @@ Ustawienie flagi powinno odbywać się przed wywołaniem metod biblioteki. Zmian
 await SdkConfig.setFinishOnBackButtonEnabled(true);
 ```
 
-## 4. Przed wywołaniem metod biblioteki
-
-Przed wywołaniem jakiejkolwiek metody konieczne jest zdefiniowanie `merchanta` w bibliotece. `Merchant` jest obiektem implementującym interfejs `P24Merchant`, przykładowo:
-```dart
-class DefaultMerchant implements P24Merchant {
-  @override
-  Map<Environment, String> get crc => {
-    Environment.SANDBOX : "default_merchant_sandbox_crc",
-    Environment.PRODUCTION : "default_merchant_production_crc"
-  };
-
-  @override
-  int get id => merchant_id;
-}
-```
-Tak stworzony obiekt należy następnie przekazać do biblioteki poprzez wywołanie metody:
-```dart
-await P24Config.setP24Merchant(DefaultMerchant());
-```
-
-## 5. Wywołanie transakcji trnRequest
+## 4. Wywołanie transakcji trnRequest
 
 Podczas rejestracji transakcji metodą `trnRegister` należy podać dodatkowe parametry:
 - `p24_mobile_lib=1`
@@ -89,10 +69,10 @@ pamiętać o dodatkowych parametrach:
 dana metoda płatności, należy ustawić ją w tym parametrze przy rejestracji
 - `p24_url_status` - adres, który zostanie wykorzystany do weryfikacji transakcji przez serwer partnera po zakończeniu procesu płatności w bibliotece mobilnej
 
-Należy ustawić parametry transakcji podając token zarejestrowanej wcześniej transakcji, opcjonalnie można ustawić środowisko `Environment.SANDBOX` bądź `Environment.PRODUCTION` (domyślnie `Environment.PRODUCTION`):
+Należy ustawić parametry transakcji podając token zarejestrowanej wcześniej transakcji. Opcjonalnie można ustawić flagę `isSandbox` w zależności od środowiska transakcji (domyślnie parametr `isSandbox` jest ustawiony na `false`):
 
 ```dart
-TrnRequestParams params = TrnRequestParams(token: _token, environment: _environment);
+TrnRequestParams params = TrnRequestParams(token: _token, isSandbox: true);
 ```
 
 Następnie należy wywołać metodę `trnRequest`:
@@ -105,21 +85,28 @@ P24SDK.trnRequest(params).then((response) {
 
 Response jest obiektem `SdkResult` składającym się z pola payload (w którym zawarty będzie ewentualny komunikat błędu) oraz obiektu `SdkStatus` przyjmującego jeden z trzech typów - **success**, **error** bądź **cancel**.
 
-## 6. Wywołanie transakcji trnDirect
+## 5. Wywołanie transakcji trnDirect
 
-Na początku należy stworzyć obiekt `TrnDirectParams`. Konstruktor obiektu wygląda następująco:
+Na początku należy stworzyć obiekt `TransactionParams`. Konstruktor obiektu wygląda następująco:
 
 ```dart
-TrnDirectParams({@required String sessionId, @required int amountInGr, 
-@required String currency,@required String description, @required String email, @required String country,
-String client, String address, String zip, String city, String phone, String language, int method,
-String urlStatus, int timeLimit, int channel, int shipping, String transferLabel, String methodRefId,
-PassageCart passageCart, Environment environment, P24Merchant merchant})
+TransactionParams({@required int merchantId, @required String crc,
+  @required String sessionId, @required int amount,
+  @required String currency, @required String description,
+  @required String email, @required String country,
+  String client, String address, String zip, String city, String phone,
+  String language, int method, String urlStatus, int timeLimit,
+  int channel, int shipping, String transferLabel, String methodRefId, PassageCart passageCart})
+```
+Parametry oznaczone adnotacją `@required` są parametrami obowiązkowymi, które muszą zostać wypełnione, pozostałe parametry są opcjonalne. Obiekt `PassageCart` powinien być przekazany w momencie wywołania transakcji pasażowej (pkt. 7). 
+
+Po stworzeniu obiektu `TransactionParams` należy stworzyć kolejny obiekt z parametrami wywołania transakcji, odpowiedni dla danej metody, a opcjonalne można ustawić wywołanie transakcji na środowisko sandbox:
+
+```dart
+TrnDirectParams params = TrnDirectParams(transactionParams: transactionParams, isSandbox: true);
 ```
 
-Parametry oznaczone adnotacją `@required` są parametrami obowiązkowymi, które muszą zostać wypełnione, pozostałe parametry są opcjonalne. Obiekt `PassageCart` powinien być przekazany w momencie wywołania transakcji pasażowej (pkt. 7). Obiekt typu 'Environment', podobnie jak w przypadku TrnRequest przyjmuje wartości `Environment.PRODUCTION` lub `Environment.SANDBOX`. Obiekt `P24Merchant` umożliwia nadpisanie domyślnie ustawionego w konfiguracji biblioteki merchanta innym dla danej transakcji.
-
-Po stworzeniu obiektu `TrnDirectParams` można przejść do wywołanie metody trnDirect:
+Po stworzeniu obiektu `TrnDirectParams` można przejść do wywołanie metody `trnDirect`:
 
 ```dart
 P24SDK.trnDirect(params).then((response) {
@@ -127,9 +114,9 @@ P24SDK.trnDirect(params).then((response) {
 });
 ```
 
-Jako response zwracany jest obiekt `SdkResult` opisany w punkcie 4.
+Jako response zwracany jest obiekt `SdkResult` (opisany w punkcie 4).
 
-## 7. Wywołanie transakcji Ekspres
+## 6. Wywołanie transakcji Ekspres
 
 Na początku należy stworzyć obiekt `ExpressParams`:
 
@@ -144,11 +131,11 @@ P24SDK.transferExpress(params).then((response) {
     // handle response
 });
 ```
-Jako response zwracany jest obiekt `SdkResult` opisany w punkcie 4.
+Jako response zwracany jest obiekt `SdkResult` (opisany w punkcie 4).
 
-## 8. Wywołanie transakcji z Pasażem 2.0
+## 7. Wywołanie transakcji z Pasażem 2.0
 
-Na początku należy stworzyć obiekt `TrnDirectParams` analogicznie jak dla trnDirect, dodając obiekt `PassageCart`:
+Na początku, należy stworzyć obiekt `TrnDirectParams` analogicznie jak dla trnDirect, dodając obiekt `PassageCart`:
 
 ``` dart
 
@@ -180,28 +167,48 @@ trnDirectParams.passageCart = cart;
 
 Wywołanie transakcji oraz parsowanie wyniku jest realizowane identycznie jak dla wywołania `trnDirect`.
 
-## 9. GooglePay (Android)
+## 8. GooglePay (Android)
 
 Proces przepływu danych przy użyciu tej metody płatności wygląda następująco:
 
 ![](img/gpay.png) 
 
-Po wyborze metody Google Pay, aplikacja powinna wysłać request o stokenizowane dane płatnika. W momencie otrzymania informacji zwrotnej z Google, aplikacja sprzedawcy przekazuje stokenizowane dane do własnego backendu, który rejestruje transakcję, a przekazane dane dołącza do żądania jako wartość parametru `p24_method_ref_id`. Rejestracja transakcji powinna odbyć się zgodnie z dokumentacją: **[https://docs.przelewy24.pl/Google_Pay](https://docs.przelewy24.pl/Google_Pay)**. Po zarejestrowaniu transakcji token powinien trafić do aplikacji sprzedawcy, która wywoła metodę biblioteki z odpowiednim środowiskiem:
+Do skorzystania z Google Pay konieczna jest dodatkowa konfiguracja projektu zgodnie z oficjalną dokumentacją Google: 
+
+**[https://developers.google.com/pay/api/android/overview](https://developers.google.com/pay/api/android/overview)**
+
+By zainicjować transakcję należy przekazać parametry transakcji oraz obiekt `GooglePayTransactionRegistrar`, który służy do rejestracji transakcji:
 
 ```dart
-GooglePay params = GooglePay(
-    token: _token,
-    environment: _getEnvironment()
+GooglePayParams params = GooglePayParams(
+    merchantId: MERCHANT_ID,
+    amount: AMOUNT_IN_GR,
+    currency: CURRENCY,
+    isSandbox: IS_SANDBOX
 );
-
-P24SDK.googlePay(params).then((value) {
+P24SDK.googlePay(params, getGooglePayTransactionRegistrar()).then((response) {
     //handle response
 });
 ```
 
+Rejestracja transakcji powinna odbyć się zgodnie z dokumentacją: 
+
+**[https://docs.przelewy24.pl/Google_Pay](https://docs.przelewy24.pl/Google_Pay)**
+
+Interfejs `GooglePayTransactionRegistrar` pozwala na implementację wymiany tokenu otrzymanego z Google Pay na token transkacji P24. W momencie wywołania metody `exchange` należy skomunikować się z serwerami P24, przekazać token płatności Google Pay jako parametr `p24_method_ref_id`, a następnie tak uzyskany token transakcji przekazać do biblioteki za pomocą callbacka:
+
+```dart
+@override
+    Future<GooglePayExchangeResult> exchange(String methodRefId) {
+        //In this place your backend should register transaction in P24 and retrieve transaction token.
+        var result = GooglePayTransactionRegistered(transactionToken: "CD77A8A04F-3E83BC-7C1044-0EFF8933DF");
+        return Future.value(result);
+    }
+```
+
 Jako response zwracany jest obiekt SdkResult opisany w punkcie 4.
 
-## 10. ApplePay (iOS)
+## 9. ApplePay (iOS)
 
 Proces przepływu danych przy użyciu tej metody płatności wygląda następująco:
 
@@ -264,3 +271,45 @@ Interfejs `ApplePayTransactionRegistrar` pozwala na implementację wymiany token
 ```
 
 Jako response zwracany jest obiekt SdkResult opisany w punkcie 4.
+
+## 10. Rejestracja karty
+
+Biblioteka P24 umożliwia rejestrację karty w systemie Przelewy24. Na początku należy stworzyć obiekt `CardData`:
+
+```dart
+CardData cardData = CardData(
+    number: CARD_NUMBER,
+    cvv: CVV,
+    expiryMonth: EXPIRY_MONTH,
+    expiryYear: EXPIRY_YEAR
+);
+```
+
+Następnie należy stworzyć nowy obiekt `RegisterCardParams`. Posiada on dwa rodzaje inicjalizacji. 
+
+Domyślny konstruktor wymaga tylko adresu URL:
+
+```dart
+RegisterCardParams params = RegisterCardParams(
+    url: REGISTER_CARD_URL
+);
+```
+
+Drugi, statyczny, umożliwia przekazanie wcześniej wypełnionych danych kartowych wraz z parametrem URL otrzymanym z backendu Przelewy24:
+
+```dart
+RegisterCardParams params = RegisterCardParams.prefilled(
+    cardData: cardData,
+    url: REGISTER_CARD_URL
+);
+```
+
+Ostatnim krokiem jest wywołanie metody `registerCard`:
+
+```dart
+P24SDK.registerCard(params).then((response){
+    //handle response
+});
+```
+
+Response jest obiektem `SdkResult` składającym się z obiektu `SdkStatus` przyjmującego jedną z trzech wartości: **success** | **error** | **cancel** oraz pola `payload`, które w przypadku `SdkStatus.success` zawiera token zarejestrowanej karty, a w wypadku `SdkStatus.error` zawiera kod błędu.
