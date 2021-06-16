@@ -191,6 +191,7 @@
 @property (nonatomic, copy) NSArray<PaymentItem *> *items;
 @property (weak) id<P24ApplePayTransactionRegistrar> registrar;
 @property (nonatomic, assign, readwrite) BOOL sandbox;
+@property (nonatomic, assign, readwrite) BOOL fullScreen;
 
 - (instancetype)initWithAppleMerchantId:(NSString *)appleMerchantId
                                  amount:(int)amount
