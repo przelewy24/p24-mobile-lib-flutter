@@ -193,7 +193,7 @@ P24SDK.googlePay(params, getGooglePayTransactionRegistrar()).then((response) {
 
 Transaction registration should take place in accordance with the documentation:
 
-**[https://docs.przelewy24.pl/Google_Pay](https://docs.przelewy24.pl/Google_Pay)**
+**[https://developers.przelewy24.pl/#tag/GPay-Description](https://developers.przelewy24.pl/#tag/GPay-Description)**
 
 The `GooglePayTransactionRegistrar` interface allows you to implement the exchange of the token received from Google Pay into the P24 transaction token. When the `exchange` method is called, communicate with the P24 servers, pass the Google Pay payment token as the `p24_method_ref_id` param, and then pass the transaction token to the library using the callback:
 
