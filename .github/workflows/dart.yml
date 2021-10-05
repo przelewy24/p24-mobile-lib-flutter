@@ -7,7 +7,7 @@ jobs:
   release:
     name: Release new plugin version to pub.dev
     runs-on: ubuntu-latest
-    if: startsWith(github.event.commits[0].message, 'library file version') != true
+    if: "!startsWith(github.event.commits[0].message, 'library file version') || contains(github.event.commits[0].message, '#bugfix')"
     container:
       image:  google/dart:latest
     steps:
