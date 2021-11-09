@@ -110,3 +110,7 @@
 ## 1.0.31
 
 * Fix app compat dependency
+
+## 1.0.35
+
+- New library file
