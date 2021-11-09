@@ -1,41 +1,79 @@
 name: Publish plugin to pub.dev
 on:
   push:
+    paths-ignore:
+      - 'example/**'
     branches:   
       - master
+      
 jobs:
   release:
-    name: Release new plugin version to pub.dev
-    runs-on: ubuntu-latest
-    if: "!startsWith(github.event.commits[0].message, 'library file version') || contains(github.event.commits[0].message, '#bugfix')"
-    container:
-      image:  google/dart:latest
-    steps:
-      - uses: actions/checkout@master
-      - name: Update plugin version
-        run: |
-          version=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
-          lastNumber=$(echo $version | grep -Eo '[0-9]+$')
-          lastNumber=$((lastNumber+1))
-          newVersion=$(echo "${version%.*}.${lastNumber}")
-          sed -i "s/^version: .*$/version: $newVersion/" pubspec.yaml
+      name: Release new plugin version to pub.dev
+      runs-on: ubuntu-latest
+      container:
+        image:  google/dart:latest
+      steps:
+        - uses: actions/checkout@master
+        
+        - name: Get new version
+          run: |
+            version=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
+            lastNumber=$(echo $version | grep -Eo '[0-9]+$')
+            lastNumber=$((lastNumber+1))
+            newVersion=$(echo "${version%.*}.${lastNumber}")
+            echo "NEW_LIB_VERSION=$newVersion" >> $GITHUB_ENV
 
-          git config --local user.email "action@github.com"
-          git config --local user.name "GitHub Action"
-          git add pubspec.yaml
-          git commit -m "Release version $newVersion" -a
-          git push origin master
-      - name: Setup credentials
-        run: |
-          mkdir -p ~/.pub-cache
-          cat <<EOF > ~/.pub-cache/credentials.json
-          {
-            "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
-            "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
-            "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
-            "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
-            "expiration": 1570721159347
-          }
-          EOF
-      - name: Publish package
-        run: pub publish -f
+        - name: Update pubspec file
+          run: |
+            sed -i "s/^version: .*$/version: ${{ env.NEW_LIB_VERSION }}/" pubspec.yaml
+        
+        - name: Set GitLab release changelog message
+          if: startsWith(github.event.commits[0].message, '#update') == true
+          run: |
+            changelogEntry="${{ github.event.commits[0].message }}"
+            changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
+            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
+        
+        - name: Set native binary release changelog message
+          if: startsWith(github.event.commits[0].message, '#nativebinary') == true
+          run: |
+            changelogMessage="- New library file"
+            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
+
+        - name: Set bugfix release changelog message
+          if: startsWith(github.event.commits[0].message, '#bugfix') == true
+          run: |
+            changelogMessage="- Bug fix"
+            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV 
+
+        - name: Update changelog file
+          run: |
+            echo '' >> CHANGELOG.md
+            echo '## ${{ env.NEW_LIB_VERSION }}' >> CHANGELOG.md
+            echo '' >> CHANGELOG.md
+            echo '${{ env.CHANGELOG_MESSAGE }}' >> CHANGELOG.md
+
+        - name: Push edited file
+          run: |
+            git config --local user.email "action@github.com"
+            git config --local user.name "GitHub Action"
+            git add pubspec.yaml
+            git add CHANGELOG.md
+            git commit -m "${{ env.CHANGELOG_MESSAGE }}" -a
+            git push origin master
+            
+        - name: Setup credentials
+          run: |
+            mkdir -p ~/.pub-cache
+            cat <<EOF > ~/.pub-cache/credentials.json
+            {
+              "accessToken":"${{ secrets.OAUTH_ACCESS_TOKEN }}",
+              "refreshToken":"${{ secrets.OAUTH_REFRESH_TOKEN }}",
+              "tokenEndpoint":"https://accounts.google.com/o/oauth2/token",
+              "scopes": [ "openid", "https://www.googleapis.com/auth/userinfo.email" ],
+              "expiration": 1570721159347
+            }
+            EOF
+
+        - name: Publish package
+          run: pub publish -f
