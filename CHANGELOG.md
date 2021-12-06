@@ -118,3 +118,7 @@
 ## 1.0.36
 
 - New library file
+
+## 1.0.37
+
+- New library file
