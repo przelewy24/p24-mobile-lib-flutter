@@ -11,13 +11,13 @@ class ApplePayParams {
 		required int amount,
 		required String currency,
 		required String description,
-		bool isSandbox = true}) => ApplePayParams._([PaymentItem(amount: amount, description: description)], currency, appleMerchantId, isSandbox);
+		bool isSandbox = false}) => ApplePayParams._([PaymentItem(amount: amount, description: description)], currency, appleMerchantId, isSandbox);
 
 	factory ApplePayParams.withMultipleItems({
 		required List<PaymentItem> items,
 		required String appleMerchantId,
 		required String currency,
-		bool isSandbox = true}) => ApplePayParams._(items, currency, appleMerchantId, isSandbox);
+		bool isSandbox = false}) => ApplePayParams._(items, currency, appleMerchantId, isSandbox);
 
 	ApplePayParams._(this._items, this._currency, this._appleMerchantId, this._isSandbox);
 

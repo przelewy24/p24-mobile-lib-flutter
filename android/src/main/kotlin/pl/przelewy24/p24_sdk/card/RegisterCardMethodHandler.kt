@@ -83,9 +83,12 @@ object RegisterCardMethodHandler {
 
     private fun parseRegisterCardMap(registerCardMap: HashMap<String, Any>): RegisterCardParams {
         val url = registerCardMap["url"] as String
-        val cardDataMap = registerCardMap["cardData"] as HashMap<String, Any>
-        val card: CardData = parseCardDataMap(cardDataMap)
-        return RegisterCardParams.createPrefilled(url, card)
+        val cardDataMap = registerCardMap["cardData"] as HashMap<String, Any>?
+        if(cardDataMap != null) {
+            val card: CardData = parseCardDataMap(cardDataMap)
+            return RegisterCardParams.createPrefilled(url, card)
+        }
+        return RegisterCardParams.create(url)
     }
 
     private fun startRegisterCard(binding: ActivityPluginBinding, registerCardParams: RegisterCardParams) {

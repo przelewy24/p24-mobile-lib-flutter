@@ -69,7 +69,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "TrnDirect")
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }

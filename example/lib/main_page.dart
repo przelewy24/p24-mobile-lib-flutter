@@ -43,11 +43,11 @@ class _MainPageState extends State<MainPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _buildEnvironmentSection(),
-              Container(height: 16),
+              SizedBox(height: 16),
               _buildSdkConfigSection(),
-              Container(height: 16),
+              SizedBox(height: 16),
               _buildSdkVersionSection(),
-              Container(height: 16),
+              SizedBox(height: 16),
               _buildMethodsSection(),
             ],
           ),
@@ -183,7 +183,7 @@ class _MainPageState extends State<MainPage> {
     } else if(Platform.isIOS) {
       return ElevatedButton(child: Text("Apple Pay"), onPressed: () => _showApplePayBottomSheet());
     } else {
-      return Container();
+      return SizedBox.shrink();
     }
   }
 

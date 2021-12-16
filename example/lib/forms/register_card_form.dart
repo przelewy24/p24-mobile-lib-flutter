@@ -79,7 +79,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Register Card",)
-            : Container()
+            : SizedBox.shrink()
       ],
     );
   }
@@ -95,8 +95,8 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
     );
 
     RegisterCardParams params = RegisterCardParams.prefilled(
-        cardData: cardData,
-        url: REGISTER_CARD_URL
+       cardData: cardData,
+       url: REGISTER_CARD_URL
     );
 
     P24SDK.registerCard(params).then((value){

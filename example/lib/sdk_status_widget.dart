@@ -39,7 +39,7 @@ class _SdkStatusWidgetState extends State<SdkStatusWidget> {
               fontWeight: FontWeight.w600,
             ),
           ),
-          Container(height: 8,),
+          SizedBox(height: 8,),
           Expanded(
             child: Container(
               color: _statusColor,

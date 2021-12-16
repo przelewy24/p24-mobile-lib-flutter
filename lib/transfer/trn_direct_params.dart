@@ -5,7 +5,7 @@ class TrnDirectParams {
   final bool _isSandbox;
 
   TrnDirectParams(
-      {required TransactionParams transactionParams, bool isSandbox = true})
+      {required TransactionParams transactionParams, bool isSandbox = false})
       : this._transactionParams = transactionParams,
         this._isSandbox = isSandbox;
 

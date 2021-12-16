@@ -8,7 +8,7 @@ class GooglePayParams {
       {required int merchantId,
       required int amount,
       required String currency,
-      bool isSandbox = true})
+      bool isSandbox = false})
       : this._merchantId = merchantId,
         this._amount = amount,
         this._currency = currency,

@@ -51,7 +51,7 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "ApplePay")
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }
@@ -89,9 +89,8 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
 	// }
 
   @override
-  Future<ApplePayExchangeResult> exchange(String methodRefId) {
+  Future<ApplePayExchangeResult> exchange(String methodRefId) async {
     //In this place your backend should register transaction in P24 and retrieve transaction token.
-    var result = ApplePayTransactionRegistered(transactionToken: "D485AEB65C-C0F20B-9BC29D-BA835F21C4");
-    return Future.value(result);
+    return ApplePayTransactionRegistered(transactionToken: "D485AEB65C-C0F20B-9BC29D-BA835F21C4");
   }
 }

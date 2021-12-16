@@ -41,7 +41,7 @@ class _TransferExpressFormState extends State<TransferExpressForm> {
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Express")
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }

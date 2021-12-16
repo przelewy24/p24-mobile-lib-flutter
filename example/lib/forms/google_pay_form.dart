@@ -42,7 +42,7 @@ class _GooglePayFormState extends State<GooglePayForm> implements GooglePayTrnRe
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "GooglePay")
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }

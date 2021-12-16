@@ -43,8 +43,9 @@ jobs:
         - name: Set bugfix release changelog message
           if: startsWith(github.event.commits[0].message, '#bugfix') == true
           run: |
-            changelogMessage="- Bug fix"
-            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV 
+            changelogEntry="${{ github.event.commits[0].message }}"
+            changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
+            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
 
         - name: Update changelog file
           run: |

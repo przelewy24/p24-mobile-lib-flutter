@@ -58,7 +58,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Passage")
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }

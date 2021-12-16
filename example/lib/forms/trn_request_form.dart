@@ -42,7 +42,7 @@ class _TrnRequestFormState extends State<TrnRequestForm> {
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "TrnRequest",)
-            : Container(),
+            : SizedBox.shrink(),
       ],
     );
   }

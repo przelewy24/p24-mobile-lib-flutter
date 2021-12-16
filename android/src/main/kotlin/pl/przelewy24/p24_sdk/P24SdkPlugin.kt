@@ -22,8 +22,6 @@ public class P24SdkPlugin: FlutterPlugin, ActivityAware {
 
     MethodChannel(binaryMessenger, "p24_sdk")
             .setMethodCallHandler(MethodCallsHandler(binding, flutterPluginBinding.binaryMessenger))
-    MethodChannel(binaryMessenger, "p24_sdk/extra_features_config")
-            .setMethodCallHandler(ExtraFeaturesConfigMethodCallsHandler())
     MethodChannel(binaryMessenger, "p24_sdk/sdk_config")
             .setMethodCallHandler(SdkConfigMethodCallsHandler())
     MethodChannel(binaryMessenger, "p24_sdk/p24_sdk_version")

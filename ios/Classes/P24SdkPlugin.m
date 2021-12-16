@@ -1,32 +1,17 @@
 #import "P24SdkPlugin.h"
+#if __has_include(<p24_sdk/p24_sdk-Swift.h>)
+#import <p24_sdk/p24_sdk-Swift.h>
+#else
+// Support project import fallback if the generated compatibility header
+// is not copied when this plugin is created as a library.
+// https://forums.swift.org/t/swift-static-libraries-dont-copy-generated-objective-c-header/19816
+#import "p24_sdk-Swift.h"
+#endif
 
-@implementation P24SdkPlugin 
-
-#pragma clang diagnostic push
-#pragma clang diagnostic ignored "-Wincompatible-pointer-types"
-
+@implementation P24SdkPlugin
 + (void)registerWithRegistrar:(NSObject<FlutterPluginRegistrar>*)registrar {
-    
-    [FlutterPluginRegistrarProvider set: registrar];
-    
-    FlutterMethodChannel* channelSdk = [FlutterMethodChannel methodChannelWithName:@"p24_sdk" binaryMessenger:[registrar messenger]];
-    P24MethodHandler* p24MethodHandler = [[P24MethodHandler alloc] init];
-    [registrar addMethodCallDelegate: p24MethodHandler channel:channelSdk];
-    
-    FlutterMethodChannel* channelExtraConfig = [FlutterMethodChannel methodChannelWithName:@"p24_sdk/extra_features_config" binaryMessenger:[registrar messenger]];
-    ExtraFeaturesConfigMethodHandler* extraFeaturesConfigMethodHandler = [[ExtraFeaturesConfigMethodHandler alloc] init];
-    [registrar addMethodCallDelegate: extraFeaturesConfigMethodHandler channel: channelExtraConfig];
-    
-    FlutterMethodChannel* channelSdkConfig = [FlutterMethodChannel methodChannelWithName:@"p24_sdk/sdk_config" binaryMessenger:[registrar messenger]];
-    SdkConfigMethodHandler* sdkConfigMethodHandler = [[SdkConfigMethodHandler alloc] init];
-    [registrar addMethodCallDelegate: sdkConfigMethodHandler channel:channelSdkConfig];
-    
-    FlutterMethodChannel* channelSdkVersion = [FlutterMethodChannel methodChannelWithName:@"p24_sdk/p24_sdk_version" binaryMessenger:[registrar messenger]];
-    SdkVersionMethodHandler* sdkVersionMethodHandler = [[SdkVersionMethodHandler alloc] init];
-    [registrar addMethodCallDelegate: sdkVersionMethodHandler channel:channelSdkVersion];
-
- }
-
-#pragma clang diagnostic pop
-
+    [P24SdkVersionPlugin registerWithRegistrar:registrar];
+    [P24SdkConfigPlugin registerWithRegistrar:registrar];
+    [P24MethodsPlugin registerWithRegistrar:registrar];
+}
 @end
