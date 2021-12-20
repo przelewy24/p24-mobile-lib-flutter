@@ -138,3 +138,7 @@
 ## 1.0.29
 
 #update
+
+## 1.0.40
+
+- minor changes
