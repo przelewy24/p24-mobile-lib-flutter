@@ -142,3 +142,7 @@
 ## 1.0.40
 
 - minor changes
+
+## 1.0.41
+
+- minor changes

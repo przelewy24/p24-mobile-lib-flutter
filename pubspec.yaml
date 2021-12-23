@@ -1,6 +1,6 @@
 name: p24_sdk
 description: Przelewy24 Mobile Payments SDK integration Flutter integration for iOS and Android
-version: 1.0.40
+version: 1.0.41
 homepage: https://github.com/przelewy24/p24-mobile-lib-flutter
 
 environment:
