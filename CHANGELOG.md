@@ -146,3 +146,7 @@
 ## 1.0.41
 
 - minor changes
+
+## 1.0.42
+
+Fix problem with iOS symbols for architecture armv7. Update to iOS 11.
