@@ -154,3 +154,7 @@ Fix problem with iOS symbols for architecture armv7. Update to iOS 11.
 ## 1.0.43
 
 - New library file
+
+## 1.0.44
+
+- New library file
