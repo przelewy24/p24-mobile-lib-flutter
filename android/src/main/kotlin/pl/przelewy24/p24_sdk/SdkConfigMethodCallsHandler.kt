@@ -9,9 +9,11 @@ class SdkConfigMethodCallsHandler: MethodChannel.MethodCallHandler  {
     override fun onMethodCall(call: MethodCall, result: MethodChannel.Result) {
         when(call.method){
             "setCertificatePinningEnabled" -> setCertificatePinningEnabled(call, result)
-            "setFinishOnBackButtonEnabled" -> setFinishOnBackButtonEnabled(call, result)
             "getCertificatePinningEnabled" -> getCertificatePinningEnabled(result)
+            "setFinishOnBackButtonEnabled" -> setFinishOnBackButtonEnabled(call, result)
             "getFinishOnBackButtonEnabled" -> getFinishOnBackButtonEnabled(result)
+            "setSplitPaymentEnabled" -> setSplitPaymentEnabled(call, result)
+            "getSplitPaymentEnabled" -> getSplitPaymentEnabled(result)
         }
     }
 
@@ -20,17 +22,26 @@ class SdkConfigMethodCallsHandler: MethodChannel.MethodCallHandler  {
         result.success(1)
     }
 
+    private fun getCertificatePinningEnabled(result: MethodChannel.Result) {
+        result.success(SdkConfig.isCertificatePinningEnabled())
+    }
+
     private fun setFinishOnBackButtonEnabled(call: MethodCall, result: MethodChannel.Result) {
         SdkConfig.setFinishOnBackButtonEnabled(call.arguments as Boolean)
         result.success(1)
     }
 
-    private fun getCertificatePinningEnabled(result: MethodChannel.Result) {
-        result.success(SdkConfig.isCertificatePinningEnabled())
-    }
-
     private fun getFinishOnBackButtonEnabled(result: MethodChannel.Result) {
         result.success(SdkConfig.isFinishOnBackButtonEnabled())
+    }
+
+    private fun setSplitPaymentEnabled(call: MethodCall, result: MethodChannel.Result) {
+        SdkConfig.setSplitPaymentEnabled(call.arguments as Boolean)
+        result.success(1)
+    }
+
+    private fun getSplitPaymentEnabled(result: MethodChannel.Result) {
+        result.success(SdkConfig.isSplitPaymentEnabled())
     }
 
 }

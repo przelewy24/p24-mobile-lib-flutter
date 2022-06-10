@@ -89,6 +89,16 @@ class _MainPageState extends State<MainPage> {
               setState((){});// rebuild to load new value
             })
           )
+        ),
+        FutureBuilder<bool>(
+          initialData: false,
+          future: SdkConfig.getSplitPaymentEnabled(),
+          builder: (context, snap) => emptyWidgetIfNull(snap.data, () => _buildCheckboxOption(
+              "Split payment", snap.data!, (value) async {
+            await SdkConfig.setSplitPaymentEnabled(value);
+            setState((){});// rebuild to load new value
+          })
+          )
         )
       ],
     );
