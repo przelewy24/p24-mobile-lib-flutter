@@ -36,5 +36,4 @@ public class P24SdkConfigPlugin: NSObject, FlutterPlugin {
             result(FlutterMethodNotImplemented)
     }
   }
-    
 }
