@@ -12,14 +12,26 @@ public class P24SdkConfigPlugin: NSObject, FlutterPlugin {
             let isPinningEnabled = call.arguments as! Bool
             P24SdkConfig.setCertificatePinningEnabled(isPinningEnabled)
             result("")
+            break
+        case "getCertificatePinningEnabled":
+            result(P24SdkConfig.isCertificatePinningEnabled())
+            break
         case "setFinishOnBackButtonEnabled":
             let isFinishOnBackButtonEnabled = call.arguments as! Bool
             P24SdkConfig.setExitOnBackButtonEnabled(isFinishOnBackButtonEnabled)
             result("")
-        case "getCertificatePinningEnabled":
-            result(P24SdkConfig.isCertificatePinningEnabled())
+            break
         case "getFinishOnBackButtonEnabled":
             result(P24SdkConfig.isExitOnBackButtonEnabled())
+            break
+        case "setSplitPaymentEnabled":
+            let isSplitPaymentEnabled = call.arguments as! Bool
+            P24SdkConfig.setSplitPaymentEnabled(isSplitPaymentEnabled)
+            result("")
+            break
+        case "getSplitPaymentEnabled":
+            result(P24SdkConfig.isSplitPaymentEnabled())
+            break
         default:
             result(FlutterMethodNotImplemented)
     }
