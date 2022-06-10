@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'dart:io' show Platform;
 
 import 'package:p24_sdk_example/forms/apple_pay_form.dart';
