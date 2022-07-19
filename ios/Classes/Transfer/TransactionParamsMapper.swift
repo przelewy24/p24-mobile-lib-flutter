@@ -21,7 +21,7 @@ internal struct TransactionParamsMapper {
         p24Payment.city = transactionParams["city"] as? String
         p24Payment.phone = transactionParams["phone"] as? String
         p24Payment.language = transactionParams["language"] as? String
-        p24Payment.method = transactionParams["method"] as! Int32
+        p24Payment.method = transactionParams["method"] as? Int32 ?? 0
         p24Payment.language = transactionParams["language"] as? String
         p24Payment.urlStatus = transactionParams["urlStatus"] as? String
         p24Payment.transferLabel = transactionParams["transferLabel"] as? String
