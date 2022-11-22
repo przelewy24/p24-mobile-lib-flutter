@@ -174,3 +174,7 @@ Fix problem with iOS symbols for architecture armv7. Update to iOS 11.
 ## 1.0.48
 
 Make method parameter optional
+
+## 1.0.49
+
+- New library file
