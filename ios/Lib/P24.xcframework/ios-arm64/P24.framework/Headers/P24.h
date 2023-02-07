@@ -74,10 +74,12 @@
 + (BOOL) isCertificatePinningEnabled;
 + (BOOL) isExitOnBackButtonEnabled;
 + (BOOL) isSplitPaymentEnabled;
++ (NSString*) getOverridedCancelButtonText;
 
 + (void) setCertificatePinningEnabled: (BOOL) isEnabled;
 + (void) setExitOnBackButtonEnabled: (BOOL) isEnabled;
 + (void) setSplitPaymentEnabled: (BOOL) isEnabled;
++ (void) overrideCancelButtonText: (NSString*) text;
 
 @end
 
