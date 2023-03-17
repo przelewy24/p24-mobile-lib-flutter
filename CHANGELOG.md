@@ -186,3 +186,7 @@ Make method parameter optional
 ## 1.0.51
 
 - New library file
+
+## 1.0.52
+
+- New library file
