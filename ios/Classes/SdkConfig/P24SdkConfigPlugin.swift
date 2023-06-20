@@ -32,6 +32,14 @@ public class P24SdkConfigPlugin: NSObject, FlutterPlugin {
         case "getSplitPaymentEnabled":
             result(P24SdkConfig.isSplitPaymentEnabled())
             break
+        case "overrideCancelButtonText":
+            let text = call.arguments as! String
+            P24SdkConfig.overrideCancelButtonText(text)
+            result("")
+            break
+        case "getOverridedCancelButtonText":
+            result(P24SdkConfig.getOverridedCancelButtonText() ?? "")
+            break
         default:
             result(FlutterMethodNotImplemented)
     }

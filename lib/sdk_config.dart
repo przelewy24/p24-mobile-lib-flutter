@@ -32,3 +32,17 @@ class SdkConfig {
   }
 
 }
+
+class IOSSdkConfig {
+  static const MethodChannel _channel =
+      const MethodChannel('p24_sdk/sdk_config');
+
+  static Future overrideCancelButtonText(String text) async {
+    await _channel.invokeMethod("overrideCancelButtonText", text);
+  }
+
+  static Future<String> getOverridedCancelButtonText() async {
+    var text = await _channel.invokeMethod<String>("getOverridedCancelButtonText");
+    return text!;
+  }
+}
