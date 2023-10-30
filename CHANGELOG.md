@@ -198,3 +198,7 @@ Make method parameter optional
 ## 1.0.54
 
 Add possibility for iOS to override cancel button text in webview
+
+## 1.0.55
+
+- New library file
