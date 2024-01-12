@@ -202,3 +202,7 @@ Add possibility for iOS to override cancel button text in webview
 ## 1.0.55
 
 - New library file
+
+## 1.0.56
+
+Bump Google Play Services Wallet library
