@@ -214,3 +214,7 @@ Bump Google Play Services Wallet library
 ## 1.0.58
 
 - New library file
+
+## 1.0.59
+
+library file version 3.5.50
