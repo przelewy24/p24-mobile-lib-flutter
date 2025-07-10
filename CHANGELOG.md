@@ -222,3 +222,7 @@ library file version 3.5.50
 ## 1.0.60
 
 Update project android, gradle and kotlin versions
+
+## 1.0.61
+
+- New library file
