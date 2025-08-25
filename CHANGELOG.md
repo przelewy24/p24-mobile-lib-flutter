@@ -226,3 +226,7 @@ Update project android, gradle and kotlin versions
 ## 1.0.61
 
 - New library file
+
+## 1.0.62
+
+- New library file
