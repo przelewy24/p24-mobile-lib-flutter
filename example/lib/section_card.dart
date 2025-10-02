@@ -18,7 +18,7 @@ class SectionCard extends StatelessWidget {
          child: Column(
            crossAxisAlignment: CrossAxisAlignment.start,
            children: <Widget>[
-             Text(title, style: Theme.of(context).textTheme.subtitle1!.copyWith(fontWeight: FontWeight.w600)),
+             Text(title, style: Theme.of(context).textTheme.titleSmall!.copyWith(fontWeight: FontWeight.w600)),
              SizedBox(height: 8),
              Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: widgets)
            ],
