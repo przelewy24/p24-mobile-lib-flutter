@@ -1,4 +1,5 @@
 name: Publish plugin to pub.dev
+
 on:
   push:
     paths-ignore:
