@@ -8,6 +8,7 @@ import 'package:p24_sdk/google_pay/google_pay_params.dart';
 import 'package:p24_sdk/google_pay/google_pay_registrar_channel.dart';
 import 'package:p24_sdk/google_pay/google_pay_trn_registrar.dart';
 import 'package:p24_sdk/card/register_card_params.dart';
+import 'package:p24_sdk/p24_sdk_version.dart';
 import 'package:p24_sdk/sdk_result.dart';
 import 'package:p24_sdk/transfer/trn_direct_params.dart';
 import 'package:p24_sdk/transfer/trn_request_params.dart';
@@ -17,7 +18,7 @@ class P24SDK {
   static const MethodChannel _channel = const MethodChannel('p24_sdk');
 
   static Future<String> getSdkVersion() async {
-    return await _channel.invokeMethod('getSdkVersion');
+    return P24SdkVersion.value();
   }
 
   static Future<SdkResult> trnRequest(TrnRequestParams params) async {

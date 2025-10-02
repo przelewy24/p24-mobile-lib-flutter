@@ -115,7 +115,7 @@ class _MainPageState extends State<MainPage> {
       widgets: <Widget>[
         FutureBuilder<String>(
           initialData: "",
-          future: P24SdkVersion.value(),
+          future: P24SDK.getSdkVersion(),
           builder: (context, snap) => emptyWidgetIfNull(snap.data, () => Text(snap.data!))
         )
       ],
