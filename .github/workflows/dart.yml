@@ -1,134 +1,138 @@
 name: Publish plugin to pub.dev
-
 on:
   push:
     paths-ignore:
       - 'example/**'
-    branches:   
+    branches:
       - master
-      
+
 jobs:
   release:
-      name: Release new plugin version to pub.dev
-      runs-on: ubuntu-latest
-      container:
-        image:  google/dart:latest
-      permissions:
-        id-token: write
-      steps:
-        - uses: actions/checkout@master
-          with:
-            fetch-depth: 3
+    name: Release new plugin version to pub.dev
+    runs-on: ubuntu-latest
+    container:
+      image:  google/dart:latest
+    steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 3
+
+      - name: Extract majors, minors, and revs from versions
+        run: |
+          lastCommitSHA=$(git log --pretty=format:'%h' -n 1 --skip=1)
+          lastVersion=$(git show $lastCommitSHA:pubspec.yaml | grep -A 0 'version:' | sed 's/^.*: //')
+          newVersion=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
           
-        - name: Extract majors, minors, and revs from versions
-          run: |
-            lastCommitSHA=$(git log --pretty=format:'%h' -n 1 --skip=1)
-            lastVersion=$(git show $lastCommitSHA:pubspec.yaml | grep -A 0 'version:' | sed 's/^.*: //')
-            newVersion=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
-
-            echo "NEW_LIB_VER=$newVersion" >> $GITHUB_ENV
-            echo "NEW_LIB_VER_MAJOR=$(echo $newVersion | cut -d "." -f 1)" >> $GITHUB_ENV
-            echo "NEW_LIB_VER_MINOR=$(echo $newVersion | cut -d "." -f 2)" >> $GITHUB_ENV
-            echo "NEW_LIB_VER_REV=$(echo $newVersion | cut -d "." -f 3)" >> $GITHUB_ENV
-
-            echo "LAST_LIB_VER=$lastVersion" >> $GITHUB_ENV
-            echo "LAST_LIB_VER_MAJOR=$(echo $lastVersion | cut -d "." -f 1)" >> $GITHUB_ENV
-            echo "LAST_LIB_VER_MINOR=$(echo $lastVersion | cut -d "." -f 2)" >> $GITHUB_ENV
-            echo "LAST_LIB_VER_REV=$(echo $lastVersion | cut -d "." -f 3)" >> $GITHUB_ENV
-
-        - name: Check if versions majors equals
-          if: ${{ env.NEW_LIB_VER_MAJOR == env.LAST_LIB_VER_MAJOR }}
-          run:  echo "MAJOR_EQUALS=true" >> $GITHUB_ENV
-         
-        - name: Check if new major version greater then last major version
-          if: ${{ env.NEW_LIB_VER_MAJOR > env.LAST_LIB_VER_MAJOR }}
-          run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
-        
-        - name: Check if last major version greater then new major version
-          if: ${{ env.NEW_LIB_VER_MAJOR < env.LAST_LIB_VER_MAJOR }}
-          run:  |
-            echo "PUBSPEC_VER=${{ env.LAST_LIB_VER }}" >> $GITHUB_ENV
-            echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
-
-        - name: Check if minor versions equals
-          if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR == env.LAST_LIB_VER_MINOR }}
-          run:  echo "MINOR_EQUALS=true" >> $GITHUB_ENV
-  
-        - name: Check if new minor version greater then last minor version
-          if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR > env.LAST_LIB_VER_MINOR }}
-          run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
-        
-        - name: Check if last minor version greater then new minor version
-          if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR < env.LAST_LIB_VER_MINOR }}
-          run:  |
-            echo "PUBSPEC_VER=${{ env.LAST_LIB_VER }}" >> $GITHUB_ENV
-            echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
-            
-        - name: Check if new rev version lower then equal last rev version
-          if: ${{ env.MAJOR_EQUALS && env.MINOR_EQUALS && env.NEW_LIB_VER_REV <= env.LAST_LIB_VER_REV }}
-          run: echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
-        
-        - name: Check if new rev version greater then last rev version
-          if: ${{ env.MAJOR_EQUALS && env.MINOR_EQUALS && env.NEW_LIB_VER_REV > env.LAST_LIB_VER_REV }}
-          run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
+          echo "NEW_LIB_VER=$newVersion" >> $GITHUB_ENV
+          echo "NEW_LIB_VER_MAJOR=$(echo $newVersion | cut -d "." -f 1)" >> $GITHUB_ENV
+          echo "NEW_LIB_VER_MINOR=$(echo $newVersion | cut -d "." -f 2)" >> $GITHUB_ENV
+          echo "NEW_LIB_VER_REV=$(echo $newVersion | cut -d "." -f 3)" >> $GITHUB_ENV
           
-        - name: Upgrade rev version
-          if: ${{ env.REV_SHOULD_BE_UPGRADED }}
-          run: |
-            version=${{ env.LAST_LIB_VER }}
-            lastNumber=$(echo $version | grep -Eo '[0-9]+$')
-            lastNumber=$((lastNumber+1))
-            newVersion=$(echo "${version%.*}.${lastNumber}")
-            echo "PUBSPEC_VER=$newVersion" >> $GITHUB_ENV
-    
-        - name: Update pubspec file
-          run: |
-            sed -i "s/^version: .*$/version: ${{ env.PUBSPEC_VER }}/" pubspec.yaml
-        
-        - name: Set GitLab release changelog message
-          if: startsWith(github.event.commits[0].message, '#update') == true
-          run: |
-            changelogEntry="${{ github.event.commits[0].message }}"
-            changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
-            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
-            echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
-            
-        - name: Set native binary release changelog message
-          if: startsWith(github.event.commits[0].message, '#nativebinary') == true
-          run: |
-            changelogMessage="- New library file"
-            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
-            echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
+          echo "LAST_LIB_VER=$lastVersion" >> $GITHUB_ENV
+          echo "LAST_LIB_VER_MAJOR=$(echo $lastVersion | cut -d "." -f 1)" >> $GITHUB_ENV
+          echo "LAST_LIB_VER_MINOR=$(echo $lastVersion | cut -d "." -f 2)" >> $GITHUB_ENV
+          echo "LAST_LIB_VER_REV=$(echo $lastVersion | cut -d "." -f 3)" >> $GITHUB_ENV
 
-        - name: Set bugfix release changelog message
-          if: startsWith(github.event.commits[0].message, '#bugfix') == true
-          run: |
-            changelogEntry="${{ github.event.commits[0].message }}"
-            changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
-            echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
-            echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
+      - name: Check if versions majors equals
+        if: ${{ env.NEW_LIB_VER_MAJOR == env.LAST_LIB_VER_MAJOR }}
+        run:  echo "MAJOR_EQUALS=true" >> $GITHUB_ENV
 
-        - name: Update changelog file
-          if: ${{ env.CHANGELOG_SHOULD_BE_UPDATED }}
-          run: |
-            echo '' >> CHANGELOG.md
-            echo '## ${{ env.PUBSPEC_VER }}' >> CHANGELOG.md
-            echo '' >> CHANGELOG.md
-            echo '${{ env.CHANGELOG_MESSAGE }}' >> CHANGELOG.md
+      - name: Check if new major version greater then last major version
+        if: ${{ env.NEW_LIB_VER_MAJOR > env.LAST_LIB_VER_MAJOR }}
+        run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
 
-        - name: Push edited file
-          run: |
-            git config --local user.email "action@github.com"
-            git config --local user.name "GitHub Action"
-            git add pubspec.yaml
-            git add CHANGELOG.md
-            git commit -m "${{ env.CHANGELOG_MESSAGE }}" -a
-            git push origin master
-            
-        - name: Publish package using OIDC
-          uses: dart-lang/setup-dart@v1
-          with:
-            sdk: stable
+      - name: Get new version
+      - name: Check if last major version greater then new major version
+        if: ${{ env.NEW_LIB_VER_MAJOR < env.LAST_LIB_VER_MAJOR }}
+        run:  |
+          echo "PUBSPEC_VER=${{ env.LAST_LIB_VER }}" >> $GITHUB_ENV
+          echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
+
+      - name: Check if minor versions equals
+        if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR == env.LAST_LIB_VER_MINOR }}
+        run:  echo "MINOR_EQUALS=true" >> $GITHUB_ENV
+
+      - name: Check if new minor version greater then last minor version
+        if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR > env.LAST_LIB_VER_MINOR }}
+        run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
+
+      - name: Check if last minor version greater then new minor version
+        if: ${{ env.MAJOR_EQUALS && env.NEW_LIB_VER_MINOR < env.LAST_LIB_VER_MINOR }}
+        run:  |
+          echo "PUBSPEC_VER=${{ env.LAST_LIB_VER }}" >> $GITHUB_ENV
+          echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
+
+      - name: Check if new rev version lower then equal last rev version
+        if: ${{ env.MAJOR_EQUALS && env.MINOR_EQUALS && env.NEW_LIB_VER_REV <= env.LAST_LIB_VER_REV }}
+        run: echo "REV_SHOULD_BE_UPGRADED=true" >> $GITHUB_ENV
+
+      - name: Check if new rev version greater then last rev version
+        if: ${{ env.MAJOR_EQUALS && env.MINOR_EQUALS && env.NEW_LIB_VER_REV > env.LAST_LIB_VER_REV }}
+        run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
+
+      - name: Upgrade rev version
+        if: ${{ env.REV_SHOULD_BE_UPGRADED }}
+        run: |
+          version=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
+          version=${{ env.LAST_LIB_VER }}
+          lastNumber=$(echo $version | grep -Eo '[0-9]+$')
+          lastNumber=$((lastNumber+1))
+          newVersion=$(echo "${version%.*}.${lastNumber}")
+          echo "NEW_LIB_VERSION=$newVersion" >> $GITHUB_ENV
           
-        - name: Publish to pub.dev
-          run: dart pub publish --force
+          echo "PUBSPEC_VER=$newVersion" >> $GITHUB_ENV
+
+      - name: Update pubspec file
+        run: |
+          sed -i "s/^version: .*$/version: ${{ env.NEW_LIB_VERSION }}/" pubspec.yaml
+          sed -i "s/^version: .*$/version: ${{ env.PUBSPEC_VER }}/" pubspec.yaml
+
+      - name: Set GitLab release changelog message
+        if: startsWith(github.event.commits[0].message, '#update') == true
+        run: |
+          changelogEntry="${{ github.event.commits[0].message }}"
+          changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
+          echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
+          
+          echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
+
+      - name: Set native binary release changelog message
+        if: startsWith(github.event.commits[0].message, '#nativebinary') == true
+        run: |
+          changelogMessage="- New library file"
+          echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
+          echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
+
+      - name: Set bugfix release changelog message
+        if: startsWith(github.event.commits[0].message, '#bugfix') == true
+        run: |
+          changelogEntry="${{ github.event.commits[0].message }}"
+          changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
+          echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
+          echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
+
+      - name: Update changelog file
+        if: ${{ env.CHANGELOG_SHOULD_BE_UPDATED }}
+        run: |
+          echo '' >> CHANGELOG.md
+          echo '## ${{ env.NEW_LIB_VERSION }}' >> CHANGELOG.md
+          echo '## ${{ env.PUBSPEC_VER }}' >> CHANGELOG.md
+          echo '' >> CHANGELOG.md
+          echo '${{ env.CHANGELOG_MESSAGE }}' >> CHANGELOG.md
+
+      - name: Push edited file
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add pubspec.yaml
+          git add CHANGELOG.md
+          git commit -m "${{ env.CHANGELOG_MESSAGE }}" -a
+          git push origin master
+
+      - name: Setup credentials
+        run: |
+          mkdir -p ~/.pub-cache
+          echo '${{ secrets.PUB_DEV_CREDENTIALS_JSON }}' > ~/.pub-cache/credentials.json
+
+      - name: Publish to pub.dev
+        run: dart pub publish --force
