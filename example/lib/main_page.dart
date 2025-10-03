@@ -199,7 +199,7 @@ class _MainPageState extends State<MainPage> {
   void _showGooglePayBottomSheet(){
     showFormDialog(_scaffoldKey.currentContext, "Google Pay", (c) => GooglePayForm(
       isSandboxEnabled: _isSandboxEnabled,
-      merchantId: TEST_MERCHANT_ID,
+      merchantId: "GOOGLE_PAY_MERCHANT_ID",
     ));
   }
 

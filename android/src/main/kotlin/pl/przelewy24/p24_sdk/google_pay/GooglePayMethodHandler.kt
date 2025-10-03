@@ -75,7 +75,7 @@ object GooglePayMethodHandler {
     }
 
     private fun parseGooglePayMap(googlePayMap: HashMap<String, Any>): GooglePayParams {
-        val merchantId = googlePayMap["merchantId"] as Int
+        val merchantId = googlePayMap["merchantId"] as String
         val amount = googlePayMap["amount"] as Int
         val currency = googlePayMap["currency"] as String
         val isSandbox = googlePayMap["isSandbox"] as Boolean

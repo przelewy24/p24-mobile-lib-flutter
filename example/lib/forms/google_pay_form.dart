@@ -4,7 +4,7 @@ import 'package:p24_sdk_example/sdk_status_widget.dart';
 
 class GooglePayForm extends StatefulWidget {
 
-  final int merchantId;
+  final String merchantId;
   final bool isSandboxEnabled;
 
   GooglePayForm({required this.merchantId, required this.isSandboxEnabled});
