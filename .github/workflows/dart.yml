@@ -41,7 +41,6 @@ jobs:
         if: ${{ env.NEW_LIB_VER_MAJOR > env.LAST_LIB_VER_MAJOR }}
         run:  echo "PUBSPEC_VER=${{ env.NEW_LIB_VER }}" >> $GITHUB_ENV
 
-      - name: Get new version
       - name: Check if last major version greater then new major version
         if: ${{ env.NEW_LIB_VER_MAJOR < env.LAST_LIB_VER_MAJOR }}
         run:  |
@@ -73,18 +72,14 @@ jobs:
       - name: Upgrade rev version
         if: ${{ env.REV_SHOULD_BE_UPGRADED }}
         run: |
-          version=$(grep -A 0 'version:' pubspec.yaml | sed 's/^.*: //')
           version=${{ env.LAST_LIB_VER }}
           lastNumber=$(echo $version | grep -Eo '[0-9]+$')
           lastNumber=$((lastNumber+1))
           newVersion=$(echo "${version%.*}.${lastNumber}")
-          echo "NEW_LIB_VERSION=$newVersion" >> $GITHUB_ENV
-          
           echo "PUBSPEC_VER=$newVersion" >> $GITHUB_ENV
 
       - name: Update pubspec file
         run: |
-          sed -i "s/^version: .*$/version: ${{ env.NEW_LIB_VERSION }}/" pubspec.yaml
           sed -i "s/^version: .*$/version: ${{ env.PUBSPEC_VER }}/" pubspec.yaml
 
       - name: Set GitLab release changelog message
@@ -93,7 +88,6 @@ jobs:
           changelogEntry="${{ github.event.commits[0].message }}"
           changelogMessage=$(echo $changelogEntry | sed 's/[^ ]* //')            
           echo "CHANGELOG_MESSAGE=$changelogMessage" >> $GITHUB_ENV
-          
           echo "CHANGELOG_SHOULD_BE_UPDATED=true" >> $GITHUB_ENV
 
       - name: Set native binary release changelog message
@@ -115,7 +109,6 @@ jobs:
         if: ${{ env.CHANGELOG_SHOULD_BE_UPDATED }}
         run: |
           echo '' >> CHANGELOG.md
-          echo '## ${{ env.NEW_LIB_VERSION }}' >> CHANGELOG.md
           echo '## ${{ env.PUBSPEC_VER }}' >> CHANGELOG.md
           echo '' >> CHANGELOG.md
           echo '${{ env.CHANGELOG_MESSAGE }}' >> CHANGELOG.md
