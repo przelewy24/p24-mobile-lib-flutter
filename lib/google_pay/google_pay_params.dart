@@ -5,6 +5,16 @@ class GooglePayParams {
   bool _isSandbox;
 
   GooglePayParams(
+      {required int merchantId,
+        required int amount,
+        required String currency,
+        bool isSandbox = false})
+      : this._merchantId = merchantId.toString(),
+        this._amount = amount,
+        this._currency = currency,
+        this._isSandbox = isSandbox;
+
+  GooglePayParams.of(
       {required String merchantId,
       required int amount,
       required String currency,
