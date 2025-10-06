@@ -238,3 +238,7 @@ Update project android, gradle and kotlin versions
 ## 1.0.65
 
 #update
+
+## 1.0.65
+
+Add backward compatibility for GooglePayParams
