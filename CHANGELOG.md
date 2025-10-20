@@ -246,3 +246,7 @@ Add backward compatibility for GooglePayParams
 ## 1.0.66
 
 Bump version
+
+## 1.0.67
+
+Update docs about proguard. Update google pay form in example to use merchantId String param
