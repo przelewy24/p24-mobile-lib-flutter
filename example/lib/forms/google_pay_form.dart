@@ -50,7 +50,7 @@ class _GooglePayFormState extends State<GooglePayForm> implements GooglePayTrnRe
   void _startGooglePay() {
     setState(() => _sdkResult = null);
 
-    GooglePayParams params = GooglePayParams(
+    GooglePayParams params = GooglePayParams.of(
         merchantId: widget.merchantId,
         amount: _amount,
         currency: "PLN",

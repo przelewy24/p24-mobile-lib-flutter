@@ -11,6 +11,27 @@ For general information on the operation of Przelewy24 mobile libraries, visit:
 |In project Xcode settings set „iOS Deployment Target” ( „Info” project settings bookmark) to version 9.0 or newer. Version 9.0 is the minimum requirement for the library to work properly with the iOS. |
 |![](img/ios_config.png)|
 
+### For Android (ProGuard/R8 configuration)
+When creating a release build for Android, Flutter enables code shrinking (ProGuard/R8) by default. This can remove parts of the library's code, causing errors during payment processing. To prevent this, you need to add a specific "keep" rule.
+
+1.  In your `android/app/build.gradle` file, ensure ProGuard is configured for the `release` build type:
+    ```groovy
+    android {
+        // ...
+        buildTypes {
+            release {
+                // ...
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+    ```
+2.  Create or edit the file `android/app/proguard-rules.pro` and add the following line:
+    ```
+    -keep class pl.przelewy24.p24lib.** { *; }
+    ```
+
 ### Adding dependencies
 
 For correct import of dependencies it is necessary to add code
