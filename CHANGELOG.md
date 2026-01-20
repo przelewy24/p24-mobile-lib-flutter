@@ -250,3 +250,7 @@ Bump version
 ## 1.0.67
 
 Update docs about proguard. Update google pay form in example to use merchantId String param
+
+## 1.0.68
+
+- New library file
