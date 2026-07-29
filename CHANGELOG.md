@@ -254,3 +254,7 @@ Update docs about proguard. Update google pay form in example to use merchantId 
 ## 1.0.68
 
 - New library file
+
+## 1.0.69
+
+Replace jcenter() with mavenCentral() - Gradle 9 compatibility + update environment for Dart 3
