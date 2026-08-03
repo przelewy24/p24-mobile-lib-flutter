@@ -13,15 +13,15 @@ A new flutter plugin project.
   s.license          = { :file => '../LICENSE' }
   s.author           = { 'Przelewy24' => 'serwis@przelewy24.pl' }
   s.source           = { :path => '.' }
-  s.source_files = 'Classes/**/*'
+  s.source_files = 'p24_sdk/Sources/p24_sdk/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '11.0'
+  s.platform = :ios, '12.0'
+  s.swift_versions = ['5.0']
 
-  # Flutter.framework does not contain a i386 slice. Only x86_64 simulators are supported.
-  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES', 'VALID_ARCHS[sdk=iphonesimulator*]' => 'x86_64' }
+  s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
 
-  s.preserve_paths = 'Lib/**/*'
-  s.vendored_frameworks = "Lib/P24.xcframework"
+  s.preserve_paths = 'p24_sdk/Lib/**/*'
+  s.vendored_frameworks = "p24_sdk/Lib/P24.xcframework"
 
 
 
