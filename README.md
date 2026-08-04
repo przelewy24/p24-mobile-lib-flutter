@@ -8,8 +8,10 @@ For general information on the operation of Przelewy24 mobile libraries, visit:
 
 |For iOS only|
 |-|
-|In project Xcode settings set „iOS Deployment Target” ( „Info” project settings bookmark) to version 9.0 or newer. Version 9.0 is the minimum requirement for the library to work properly with the iOS. |
+|In project Xcode settings set „iOS Deployment Target” ( „Info” project settings bookmark) to version 13.0 or newer. Version 13.0 is the minimum requirement for the library to work properly with the iOS. |
 |![](img/ios_config.png)|
+
+The iOS implementation of the plugin supports both **Swift Package Manager** (default since Flutter 3.44) and **CocoaPods**. Swift Package Manager is used automatically when building with Flutter 3.44 or newer; older Flutter versions fall back to CocoaPods.
 
 ### For Android (ProGuard/R8 configuration)
 When creating a release build for Android, Flutter enables code shrinking (ProGuard/R8) by default. This can remove parts of the library's code, causing errors during payment processing. To prevent this, you need to add a specific "keep" rule.

@@ -20,3 +20,8 @@ dev_dependencies:
 
 flutter:
   uses-material-design: true
+  # Temporary workaround for flutter/flutter#186881 (SwiftPM fails when the repo
+  # directory name != the plugin package name). Remove once the fix is in stable.
+  # Only affects this example app; consumers keep using SwiftPM.
+  config:
+    enable-swift-package-manager: false

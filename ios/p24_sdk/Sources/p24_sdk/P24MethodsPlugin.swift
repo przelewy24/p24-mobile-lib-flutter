@@ -1,3 +1,4 @@
+import Flutter
 import P24
 
 public class P24MethodsPlugin: NSObject, FlutterPlugin {
