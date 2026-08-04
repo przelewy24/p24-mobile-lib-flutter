@@ -258,3 +258,7 @@ Update docs about proguard. Update google pay form in example to use merchantId 
 ## 1.0.69
 
 Replace jcenter() with mavenCentral() - Gradle 9 compatibility + update environment for Dart 3
+
+## 1.0.70
+
+Add Swift Package Manager support for iOS. SPM is now the default integration since Flutter 3.44, CocoaPods is kept for backward compatibility. Minimum iOS deployment target is now 13.0.
