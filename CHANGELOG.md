@@ -262,3 +262,7 @@ Replace jcenter() with mavenCentral() - Gradle 9 compatibility + update environm
 ## 1.0.70
 
 Add Swift Package Manager support for iOS. SPM is now the default integration since Flutter 3.44, CocoaPods is kept for backward compatibility. Minimum iOS deployment target is now 13.0.
+
+## 1.0.71
+
+Fix example app Android build with missing Gradle files
