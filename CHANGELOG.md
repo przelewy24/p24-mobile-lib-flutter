@@ -266,3 +266,7 @@ Add Swift Package Manager support for iOS. SPM is now the default integration si
 ## 1.0.71
 
 Fix example app Android build with missing Gradle files
+
+## 1.0.72
+
+Align Android toolchain with AGP 9 / Gradle 9.1 / Kotlin 2.3.20, Java 17 and compileSdk 36
