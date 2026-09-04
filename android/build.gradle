@@ -25,6 +25,18 @@ rootProject.allprojects {
 
 apply plugin: 'com.android.library'
 
+// AGP 9+ can provide built-in Kotlin support, in which case applying the Kotlin
+// Gradle Plugin (KGP) is an error. Built-in Kotlin is absent on AGP < 9 and is
+// also disabled by `android.builtInKotlin=false` (the default emitted by the
+// Flutter 3.44 migrator), and in both cases KGP is required to compile the
+// Kotlin sources. Detect the resulting state rather than inferring it from the
+// AGP version alone: if AGP already registered the `kotlin` extension, built-in
+// Kotlin is active and KGP must not be applied.
+// https://docs.flutter.dev/release/breaking-changes/migrate-to-built-in-kotlin/for-plugin-authors
+if (extensions.findByName('kotlin') == null) {
+    apply plugin: 'kotlin-android'
+}
+
 android {
     compileSdk 36
     namespace "pl.przelewy24.p24_sdk"
@@ -33,7 +45,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdk 24
+        minSdk 19
     }
     lint {
         disable 'InvalidPackage'
@@ -42,10 +54,11 @@ android {
         sourceCompatibility JavaVersion.VERSION_17
         targetCompatibility JavaVersion.VERSION_17
     }
-    kotlin {
-        compilerOptions {
-            jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
-        }
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17
     }
 }
 
