@@ -9,10 +9,12 @@ Ogólne informacje o działaniu bibliotek mobilnych w systemie Przelewy24 znajdz
 
 |Dla iOS|
 |-|
-|W ustawieniach projektu Xcode należy ustawić „iOS Deployment Target” (zakładka „Info” ustawień projektu) na wersję 13.0 lub nowszą. Wersja 13.0 to minimalna wersja systemu iOS wymagana do poprawnego działania biblioteki.\
+|W ustawieniach projektu Xcode należy ustawić „iOS Deployment Target” (zakładka „Info” ustawień projektu) na wersję 15.0 lub nowszą. Wersja 15.0 to minimalna wersja systemu iOS wymagana do poprawnego działania biblioteki.\
 |![](img/ios_config.png)|
 
-Implementacja iOS pluginu wspiera zarówno **Swift Package Manager** (domyślny od Fluttera 3.44), jak i **CocoaPods**. Swift Package Manager jest używany automatycznie podczas budowania z Flutterem 3.44 lub nowszym; starsze wersje Fluttera korzystają z CocoaPods.
+Ta wersja pluginu wymaga **Fluttera 3.47 lub nowszego**, który podniósł minimalną wspieraną wersję iOS z 13.0 do 15.0 w celu obsługi Xcode 27. Jeśli Twoja aplikacja musi nadal wspierać iOS 13 lub 14, pozostań przy wersji pluginu `1.0.72`.
+
+Implementacja iOS pluginu wspiera zarówno **Swift Package Manager** (domyślny od Fluttera 3.44), jak i **CocoaPods**.
 
 ### Dodawanie zależności
 
