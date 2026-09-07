@@ -4,7 +4,7 @@ import PackageDescription
 let package = Package(
     name: "p24_sdk",
     platforms: [
-        .iOS("13.0")
+        .iOS("15.0")
     ],
     products: [
         .library(name: "p24-sdk", targets: ["p24_sdk"])

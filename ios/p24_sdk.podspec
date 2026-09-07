@@ -15,7 +15,7 @@ A new flutter plugin project.
   s.source           = { :path => '.' }
   s.source_files = 'p24_sdk/Sources/p24_sdk/**/*'
   s.dependency 'Flutter'
-  s.platform = :ios, '12.0'
+  s.platform = :ios, '15.0'
   s.swift_versions = ['5.0']
 
   s.pod_target_xcconfig = { 'DEFINES_MODULE' => 'YES' }
