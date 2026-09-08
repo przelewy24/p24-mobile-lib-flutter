@@ -274,3 +274,7 @@ Align Android toolchain with AGP 9 / Gradle 9.1 / Kotlin 2.3.20, Java 17 and com
 ## 1.1.1
 
 Raise minimum iOS deployment target to 15.0 and require Flutter 3.47 or newer, following the minimum iOS version bump needed for Xcode 27 support. Apps targeting iOS 13 or 14 should stay on 1.0.72.
+
+## 1.1.2
+
+Raise Android minSdkVersion from 19 to 24, matching Flutter 3.47. Apps targeting Android below 7.0 should stay on 1.0.72.
