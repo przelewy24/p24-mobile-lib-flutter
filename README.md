@@ -15,6 +15,22 @@ This version of the plugin requires **Flutter 3.47 or newer**, which raised the 
 
 The iOS implementation of the plugin supports both **Swift Package Manager** (default since Flutter 3.44) and **CocoaPods**.
 
+### For Android
+
+The plugin requires **`minSdkVersion` 24 (Android 7.0)** or newer. This matches the minimum Android version supported by Flutter 3.47. Apps created with a recent Flutter version already use this value by default, so no change is usually needed.
+
+If you set `minSdkVersion` explicitly in your `android/app/build.gradle`, make sure it is at least 24:
+
+```groovy
+android {
+    defaultConfig {
+        minSdkVersion 24
+    }
+}
+```
+
+If your app must keep supporting Android versions below 7.0, stay on plugin version `1.0.72`.
+
 ### For Android (ProGuard/R8 configuration)
 When creating a release build for Android, Flutter enables code shrinking (ProGuard/R8) by default. This can remove parts of the library's code, causing errors during payment processing. To prevent this, you need to add a specific "keep" rule.
 

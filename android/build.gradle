@@ -45,7 +45,7 @@ android {
         main.java.srcDirs += 'src/main/kotlin'
     }
     defaultConfig {
-        minSdk 19
+        minSdk 24
     }
     lint {
         disable 'InvalidPackage'

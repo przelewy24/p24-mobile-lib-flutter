@@ -16,6 +16,44 @@ Ta wersja pluginu wymaga **Fluttera 3.47 lub nowszego**, który podniósł minim
 
 Implementacja iOS pluginu wspiera zarówno **Swift Package Manager** (domyślny od Fluttera 3.44), jak i **CocoaPods**.
 
+### Dla Androida
+
+Plugin wymaga **`minSdkVersion` 24 (Android 7.0)** lub nowszej. Odpowiada to minimalnej wersji Androida wspieranej przez Fluttera 3.47. Aplikacje utworzone w nowszych wersjach Fluttera domyślnie używają już tej wartości, więc zazwyczaj nie trzeba nic zmieniać.
+
+Jeśli ustawiasz `minSdkVersion` jawnie w pliku `android/app/build.gradle`, upewnij się, że wynosi co najmniej 24:
+
+```groovy
+android {
+    defaultConfig {
+        minSdkVersion 24
+    }
+}
+```
+
+Jeśli Twoja aplikacja musi nadal wspierać wersje Androida starsze niż 7.0, pozostań przy wersji pluginu `1.0.72`.
+
+### Dla Androida (konfiguracja ProGuard/R8)
+
+Podczas tworzenia buildu release dla Androida Flutter domyślnie włącza zmniejszanie kodu (ProGuard/R8). Może to usunąć część kodu biblioteki, powodując błędy w trakcie realizacji płatności. Aby temu zapobiec, należy dodać odpowiednią regułę „keep”.
+
+1.  W pliku `android/app/build.gradle` upewnij się, że ProGuard jest skonfigurowany dla typu buildu `release`:
+    ```groovy
+    android {
+        // ...
+        buildTypes {
+            release {
+                // ...
+                minifyEnabled true
+                proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            }
+        }
+    }
+    ```
+2.  Utwórz lub edytuj plik `android/app/proguard-rules.pro` i dodaj następującą linię:
+    ```
+    -keep class pl.przelewy24.p24lib.** { *; }
+    ```
+
 ### Dodawanie zależności
 
 Do poprawnego zaimportowania zależności konieczne jest dodanie do pliku **pubspec.yaml** projektu w sekcji **dependencies** fragmentu:
