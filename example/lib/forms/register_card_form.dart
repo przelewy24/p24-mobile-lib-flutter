@@ -5,14 +5,16 @@ import 'package:p24_sdk_example/sdk_status_widget.dart';
 
 
 class RegisterCardForm extends StatefulWidget {
+  const RegisterCardForm({super.key});
+
 
   @override
-  _RegisterCardFormState createState() => _RegisterCardFormState();
+  State<RegisterCardForm> createState() => _RegisterCardFormState();
 }
 
 class _RegisterCardFormState extends State<RegisterCardForm> {
 
-  static const REGISTER_CARD_URL = "https://sandbox.przelewy24.pl/bundle/card?lang=PL&merchantId=46862&userId=y8vp5sf5wf&sessionId=1&sign=ce91e29bfdf708c2989f610cc955b5dc4b3fdb5619762d4332550c37d6e6a7b5f049ca3c9ad1e89977a7e82287bacdef";
+  static const registerCardUrl = "https://sandbox.przelewy24.pl/bundle/card?lang=PL&merchantId=46862&userId=y8vp5sf5wf&sessionId=1&sign=ce91e29bfdf708c2989f610cc955b5dc4b3fdb5619762d4332550c37d6e6a7b5f049ca3c9ad1e89977a7e82287bacdef";
 
   SdkResult? _sdkResult;
 
@@ -29,7 +31,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
       children: <Widget>[
         TextFormField(
           initialValue: _number,
-          decoration: InputDecoration(labelText: "Card Number"),
+          decoration: const InputDecoration(labelText: "Card Number"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
@@ -40,7 +42,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         ),
         TextFormField(
           initialValue: _expiryYear.toString(),
-          decoration: InputDecoration(labelText: "Expiry year"),
+          decoration: const InputDecoration(labelText: "Expiry year"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
@@ -51,7 +53,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         ),
         TextFormField(
           initialValue: _expiryMonth.toString(),
-          decoration: InputDecoration(labelText: "Expiry month"),
+          decoration: const InputDecoration(labelText: "Expiry month"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
@@ -62,7 +64,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
         ),
         TextFormField(
           initialValue: _cvv,
-          decoration: InputDecoration(labelText: "CVV"),
+          decoration: const InputDecoration(labelText: "CVV"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
@@ -72,14 +74,14 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startRegisterCard();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Register Card",)
-            : SizedBox.shrink()
+            : const SizedBox.shrink()
       ],
     );
   }
@@ -96,7 +98,7 @@ class _RegisterCardFormState extends State<RegisterCardForm> {
 
     RegisterCardParams params = RegisterCardParams.prefilled(
        cardData: cardData,
-       url: REGISTER_CARD_URL
+       url: registerCardUrl
     );
 
     P24SDK.registerCard(params).then((value){

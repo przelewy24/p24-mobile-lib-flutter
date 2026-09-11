@@ -1,28 +1,28 @@
 class GooglePayParams {
-  String _merchantId;
-  int _amount;
-  String _currency;
-  bool _isSandbox;
+  final String _merchantId;
+  final int _amount;
+  final String _currency;
+  final bool _isSandbox;
 
   GooglePayParams(
       {required int merchantId,
         required int amount,
         required String currency,
         bool isSandbox = false})
-      : this._merchantId = merchantId.toString(),
-        this._amount = amount,
-        this._currency = currency,
-        this._isSandbox = isSandbox;
+      : _merchantId = merchantId.toString(),
+        _amount = amount,
+        _currency = currency,
+        _isSandbox = isSandbox;
 
   GooglePayParams.of(
       {required String merchantId,
       required int amount,
       required String currency,
       bool isSandbox = false})
-      : this._merchantId = merchantId,
-        this._amount = amount,
-        this._currency = currency,
-        this._isSandbox = isSandbox;
+      : _merchantId = merchantId,
+        _amount = amount,
+        _currency = currency,
+        _isSandbox = isSandbox;
 
   String get merchantId => _merchantId;
   int get amount => _amount;

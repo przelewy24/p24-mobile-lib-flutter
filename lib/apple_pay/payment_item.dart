@@ -1,10 +1,10 @@
 class PaymentItem {
-	String _description;
-	int _amount;
+	final String _description;
+	final int _amount;
 
 	PaymentItem({required String description, required int amount}):
-			this._description = description,
-			this._amount = amount;
+			_description = description,
+			_amount = amount;
 
 	String get description => _description;
 	int get amount => _amount;

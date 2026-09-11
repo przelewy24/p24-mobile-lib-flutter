@@ -7,10 +7,10 @@ class GooglePayForm extends StatefulWidget {
   final String merchantId;
   final bool isSandboxEnabled;
 
-  GooglePayForm({required this.merchantId, required this.isSandboxEnabled});
+  const GooglePayForm({super.key, required this.merchantId, required this.isSandboxEnabled});
 
   @override
-  _GooglePayFormState createState() => _GooglePayFormState();
+  State<GooglePayForm> createState() => _GooglePayFormState();
 
 }
 
@@ -27,7 +27,7 @@ class _GooglePayFormState extends State<GooglePayForm> implements GooglePayTrnRe
       children: <Widget>[
         TextFormField(
           initialValue: _amount.toString(),
-          decoration: InputDecoration(labelText: "Amount"),
+          decoration: const InputDecoration(labelText: "Amount"),
           onChanged: (currentValue) {
             setState(() {
               _amount = int.parse(currentValue);
@@ -35,14 +35,14 @@ class _GooglePayFormState extends State<GooglePayForm> implements GooglePayTrnRe
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startGooglePay();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "GooglePay")
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

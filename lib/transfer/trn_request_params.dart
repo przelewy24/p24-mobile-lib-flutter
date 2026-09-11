@@ -3,8 +3,8 @@ class TrnRequestParams {
   final bool _isSandbox;
 
   TrnRequestParams({required String token, bool isSandbox = false})
-      : this._token = token,
-        this._isSandbox = isSandbox;
+      : _token = token,
+        _isSandbox = isSandbox;
 
   String get token => _token;
 

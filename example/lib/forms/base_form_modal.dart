@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:p24_sdk_example/forms/base_modal_form_toolbar.dart';
 
 class BaseFormModal extends StatelessWidget {
@@ -7,11 +6,11 @@ class BaseFormModal extends StatelessWidget {
   final String title;
   final WidgetBuilder builder;
 
-  const BaseFormModal({required this.title, required this.builder});
+  const BaseFormModal({super.key, required this.title, required this.builder});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return SizedBox(
       width: double.maxFinite,
       child: Container(
         color: Colors.white,
@@ -20,7 +19,7 @@ class BaseFormModal extends StatelessWidget {
             mainAxisSize: MainAxisSize.min,
             children: <Widget>[
               BaseModalFormToolbar(title: title),
-              Divider(height: 1),
+              const Divider(height: 1),
               Padding(
                 padding: const EdgeInsets.all(16.0),
                 child: builder(context)

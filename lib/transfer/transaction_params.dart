@@ -10,19 +10,19 @@ class TransactionParams {
   final String _email;
   final String _country;
 
-  String? _client;
-  String? _address;
-  String? _zip;
-  String? _city;
-  String? _phone;
-  String? _language;
-  int? _method;
-  String? _urlStatus;
-  int? _timeLimit;
-  int? _channel;
-  int? _shipping;
-  String? _transferLabel;
-  String? _methodRefId;
+  final String? _client;
+  final String? _address;
+  final String? _zip;
+  final String? _city;
+  final String? _phone;
+  final String? _language;
+  final int? _method;
+  final String? _urlStatus;
+  final int? _timeLimit;
+  final int? _channel;
+  final int? _shipping;
+  final String? _transferLabel;
+  final String? _methodRefId;
 
   PassageCart? passageCart;
 
@@ -49,27 +49,27 @@ class TransactionParams {
       String? transferLabel,
       String? methodRefId,
       PassageCart? passageCart})
-      : this._merchantId = merchantId,
-        this._crc = crc,
-        this._sessionId = sessionId,
-        this._amount = amount,
-        this._currency = currency,
-        this._description = description,
-        this._email = email,
-        this._country = country,
-        this._client = client,
-        this._address = address,
-        this._zip = zip,
-        this._city = city,
-        this._phone = phone,
-        this._language = language,
-        this._method = method,
-        this._urlStatus = urlStatus,
-        this._timeLimit = timeLimit,
-        this._channel = channel,
-        this._shipping = shipping,
-        this._transferLabel = transferLabel,
-        this._methodRefId = methodRefId;
+      : _merchantId = merchantId,
+        _crc = crc,
+        _sessionId = sessionId,
+        _amount = amount,
+        _currency = currency,
+        _description = description,
+        _email = email,
+        _country = country,
+        _client = client,
+        _address = address,
+        _zip = zip,
+        _city = city,
+        _phone = phone,
+        _language = language,
+        _method = method,
+        _urlStatus = urlStatus,
+        _timeLimit = timeLimit,
+        _channel = channel,
+        _shipping = shipping,
+        _transferLabel = transferLabel,
+        _methodRefId = methodRefId;
 
   int get merchantId => _merchantId;
   String get crc => _crc;

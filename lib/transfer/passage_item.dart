@@ -5,7 +5,7 @@ class PassageItem {
   final int _price;
   final int _number;
   final int _targetAmount;
-  final _targetPosId;
+  final int _targetPosId;
 
   PassageItem(
       {required String name,
@@ -15,13 +15,13 @@ class PassageItem {
       required int number,
       required int targetAmount,
       required int targetPosId})
-      : this._name = name,
-        this._description = description,
-        this._quantity = quantity,
-        this._price = price,
-        this._number = number,
-        this._targetAmount = targetAmount,
-        this._targetPosId = targetPosId;
+      : _name = name,
+        _description = description,
+        _quantity = quantity,
+        _price = price,
+        _number = number,
+        _targetAmount = targetAmount,
+        _targetPosId = targetPosId;
 
   int get targetPosId => _targetPosId;
   int get targetAmount => _targetAmount;
