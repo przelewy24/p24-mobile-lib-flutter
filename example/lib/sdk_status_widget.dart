@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:p24_sdk/p24_sdk.dart';
@@ -8,10 +7,10 @@ class SdkStatusWidget extends StatefulWidget {
   final SdkResult? sdkResult;
   final String prefix;
 
-  SdkStatusWidget({required this.sdkResult, required this.prefix});
+  const SdkStatusWidget({super.key, required this.sdkResult, required this.prefix});
 
   @override
-  _SdkStatusWidgetState createState() => _SdkStatusWidgetState();
+  State<SdkStatusWidget> createState() => _SdkStatusWidgetState();
 
 }
 
@@ -27,19 +26,19 @@ class _SdkStatusWidgetState extends State<SdkStatusWidget> {
   }
 
   Widget _statusWidget() {
-    return Container(
+    return SizedBox(
       height: 100,
       width: double.maxFinite,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Text("Status",
+          const Text("Status",
             style: TextStyle(
               fontWeight: FontWeight.w600,
             ),
           ),
-          SizedBox(height: 8,),
+          const SizedBox(height: 8,),
           Expanded(
             child: Container(
               color: _statusColor,
@@ -49,7 +48,7 @@ class _SdkStatusWidgetState extends State<SdkStatusWidget> {
                   Text(
                     _message,
                     textAlign: TextAlign.center,
-                    style: TextStyle(
+                    style: const TextStyle(
                       fontWeight: FontWeight.w600,
                     ),
                   ),

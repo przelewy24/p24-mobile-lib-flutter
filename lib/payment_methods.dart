@@ -15,7 +15,7 @@ import 'package:p24_sdk/transfer/trn_request_params.dart';
 import 'package:p24_sdk/transfer/express_params.dart';
 
 class P24SDK {
-  static const MethodChannel _channel = const MethodChannel('p24_sdk');
+  static const MethodChannel _channel = MethodChannel('p24_sdk');
 
   static Future<String> getSdkVersion() async {
     return P24SdkVersion.value();

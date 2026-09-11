@@ -14,17 +14,19 @@ import 'package:p24_sdk_example/section_card.dart';
 import 'package:p24_sdk/p24_sdk.dart';
 
 class MainPage extends StatefulWidget {
+  const MainPage({super.key});
+
 
   @override
-  _MainPageState createState() => _MainPageState();
+  State<MainPage> createState() => _MainPageState();
 }
 
 class _MainPageState extends State<MainPage> {
   final _scaffoldKey = GlobalKey<ScaffoldState>();
 
-  static const TEST_MERCHANT_ID = 64195;
-  static const TEST_SANDBOX_CRC = "d27e4cb580e9bbfe";
-  static const TEST_PRODUCTION_CRC = "b36147eeac447028";
+  static const testMerchantId = 64195;
+  static const testSandboxCrc = "d27e4cb580e9bbfe";
+  static const testProductionCrc = "b36147eeac447028";
 
   bool _isSandboxEnabled = false;
 
@@ -42,11 +44,11 @@ class _MainPageState extends State<MainPage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
               _buildEnvironmentSection(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildSdkConfigSection(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildSdkVersionSection(),
-              SizedBox(height: 16),
+              const SizedBox(height: 16),
               _buildMethodsSection(),
             ],
           ),
@@ -103,9 +105,9 @@ class _MainPageState extends State<MainPage> {
     );
   }
 
-  Widget emptyWidgetIfNull(dynamic value, Widget builder()) {
+  Widget emptyWidgetIfNull(dynamic value, Widget Function() builder) {
     return value == null
-        ? SizedBox.shrink()
+        ? const SizedBox.shrink()
         : builder();
   }
 
@@ -123,7 +125,7 @@ class _MainPageState extends State<MainPage> {
   }
 
   Widget _buildCheckboxOption(String label, bool isChecked, Function(bool) onChanged) {
-    return Container(
+    return SizedBox(
       height: 32,
       child: Row(
         children: <Widget>[
@@ -143,11 +145,11 @@ class _MainPageState extends State<MainPage> {
     return SectionCard(
       title: "Actions",
       widgets: <Widget>[
-        ElevatedButton(child: Text("Transfer TrnRequest"), onPressed: _showTrnRequestBottomSheet),
-        ElevatedButton(child: Text("Transfer TrnDirect"), onPressed: _showTrnDirectBottomSheet),
-        ElevatedButton(child: Text("Transfer Express"), onPressed: _showExpressBottomSheet),
-        ElevatedButton(child: Text("Transfer Passage"), onPressed: _showPassageBottomSheet),
-        ElevatedButton(child: Text("Register Card"), onPressed: _showRegisterCardBottomSheet),
+        ElevatedButton(onPressed: _showTrnRequestBottomSheet, child: const Text("Transfer TrnRequest")),
+        ElevatedButton(onPressed: _showTrnDirectBottomSheet, child: const Text("Transfer TrnDirect")),
+        ElevatedButton(onPressed: _showExpressBottomSheet, child: const Text("Transfer Express")),
+        ElevatedButton(onPressed: _showPassageBottomSheet, child: const Text("Transfer Passage")),
+        ElevatedButton(onPressed: _showRegisterCardBottomSheet, child: const Text("Register Card")),
         _get3thPartWalletButton()
       ],
     );
@@ -161,38 +163,38 @@ class _MainPageState extends State<MainPage> {
 
   void _showTrnDirectBottomSheet() async {
     showFormDialog(_scaffoldKey.currentContext, "TrnDirect", (c) => TrnDirectForm(
-      crc: _isSandboxEnabled ? TEST_SANDBOX_CRC : TEST_PRODUCTION_CRC,
+      crc: _isSandboxEnabled ? testSandboxCrc : testProductionCrc,
       isSandboxEnabled: _isSandboxEnabled,
-      merchantId: TEST_MERCHANT_ID,
+      merchantId: testMerchantId,
     ));
 
   }
 
   void _showExpressBottomSheet() {
-    showFormDialog(_scaffoldKey.currentContext, "Express", (c) => TransferExpressForm(
-      merchantId: TEST_MERCHANT_ID,
+    showFormDialog(_scaffoldKey.currentContext, "Express", (c) => const TransferExpressForm(
+      merchantId: testMerchantId,
     ));
   }
 
   void _showPassageBottomSheet() {
     showFormDialog(_scaffoldKey.currentContext, "Passage", (c) => TransferPassageForm(
-      crc: _isSandboxEnabled ? TEST_SANDBOX_CRC : TEST_PRODUCTION_CRC,
+      crc: _isSandboxEnabled ? testSandboxCrc : testProductionCrc,
       isSandboxEnabled: _isSandboxEnabled,
-      merchantId: TEST_MERCHANT_ID,
+      merchantId: testMerchantId,
     ));
   }
 
   void _showRegisterCardBottomSheet() {
-    showFormDialog(_scaffoldKey.currentContext, "Register Card", (c) => RegisterCardForm());
+    showFormDialog(_scaffoldKey.currentContext, "Register Card", (c) => const RegisterCardForm());
   }
 
   Widget _get3thPartWalletButton() {
     if(Platform.isAndroid) {
-      return ElevatedButton(child: Text("Google Pay"), onPressed: () => _showGooglePayBottomSheet());
+      return ElevatedButton(child: const Text("Google Pay"), onPressed: () => _showGooglePayBottomSheet());
     } else if(Platform.isIOS) {
-      return ElevatedButton(child: Text("Apple Pay"), onPressed: () => _showApplePayBottomSheet());
+      return ElevatedButton(child: const Text("Apple Pay"), onPressed: () => _showApplePayBottomSheet());
     } else {
-      return SizedBox.shrink();
+      return const SizedBox.shrink();
     }
   }
 

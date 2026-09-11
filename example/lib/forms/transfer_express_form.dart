@@ -7,10 +7,10 @@ class TransferExpressForm extends StatefulWidget {
 
   final int merchantId;
 
-  TransferExpressForm({required this.merchantId});
+  const TransferExpressForm({super.key, required this.merchantId});
 
   @override
-  _TransferExpressFormState createState() => _TransferExpressFormState();
+  State<TransferExpressForm> createState() => _TransferExpressFormState();
 }
 
 class _TransferExpressFormState extends State<TransferExpressForm> {
@@ -26,7 +26,7 @@ class _TransferExpressFormState extends State<TransferExpressForm> {
       children: <Widget>[
         TextFormField(
           initialValue: _expressUrl,
-          decoration: InputDecoration(labelText: "Express URL"),
+          decoration: const InputDecoration(labelText: "Express URL"),
           onChanged: (currentValue) {
             setState(() {
               _expressUrl = currentValue;
@@ -34,14 +34,14 @@ class _TransferExpressFormState extends State<TransferExpressForm> {
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startTransferExpress();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Express")
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

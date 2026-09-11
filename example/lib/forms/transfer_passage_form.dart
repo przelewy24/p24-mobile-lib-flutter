@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:p24_sdk/p24_sdk.dart';
@@ -11,10 +10,10 @@ class TransferPassageForm extends StatefulWidget {
   final int merchantId;
   final String crc;
 
-  TransferPassageForm({required this.isSandboxEnabled, required this.merchantId, required this.crc});
+  const TransferPassageForm({super.key, required this.isSandboxEnabled, required this.merchantId, required this.crc});
 
   @override
-  _TransferPassageFormState createState() => _TransferPassageFormState();
+  State<TransferPassageForm> createState() => _TransferPassageFormState();
 }
 
 class _TransferPassageFormState extends State<TransferPassageForm> {
@@ -30,7 +29,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: <Widget>[
         TextFormField(
-          decoration: InputDecoration(labelText: "Method number"),
+          decoration: const InputDecoration(labelText: "Method number"),
           inputFormatters: [
             FilteringTextInputFormatter.digitsOnly
           ],
@@ -43,7 +42,7 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
         ),
         TextFormField(
           initialValue: _description,
-          decoration: InputDecoration(labelText: "Description"),
+          decoration: const InputDecoration(labelText: "Description"),
           onChanged: (currentValue) {
             setState(() {
               _description = currentValue;
@@ -51,14 +50,14 @@ class _TransferPassageFormState extends State<TransferPassageForm> {
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startTransferPassage();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "Passage")
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

@@ -2,7 +2,7 @@ import 'package:flutter/services.dart';
 
 class SdkConfig {
   static const MethodChannel _channel =
-      const MethodChannel('p24_sdk/sdk_config');
+      MethodChannel('p24_sdk/sdk_config');
 
   static Future setCertificatePinningEnabled(bool value) async {
     await _channel.invokeMethod("setCertificatePinningEnabled", value);
@@ -35,7 +35,7 @@ class SdkConfig {
 
 class IOSSdkConfig {
   static const MethodChannel _channel =
-      const MethodChannel('p24_sdk/sdk_config');
+      MethodChannel('p24_sdk/sdk_config');
 
   static Future overrideCancelButtonText(String text) async {
     await _channel.invokeMethod("overrideCancelButtonText", text);

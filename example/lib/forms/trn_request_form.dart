@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:p24_sdk/p24_sdk.dart';
 import 'package:p24_sdk_example/sdk_status_widget.dart';
@@ -7,10 +6,10 @@ class TrnRequestForm extends StatefulWidget {
 
   final bool isSandboxEnabled;
 
-  TrnRequestForm({required this.isSandboxEnabled});
+  const TrnRequestForm({super.key, required this.isSandboxEnabled});
 
   @override
-  _TrnRequestFormState createState() => _TrnRequestFormState();
+  State<TrnRequestForm> createState() => _TrnRequestFormState();
 
 }
 
@@ -26,7 +25,7 @@ class _TrnRequestFormState extends State<TrnRequestForm> {
       crossAxisAlignment: CrossAxisAlignment.stretch,
       children: <Widget>[
         TextField(
-          decoration: InputDecoration(labelText: "Token"),
+          decoration: const InputDecoration(labelText: "Token"),
           onChanged: (currentValue) {
             setState(() => _token = currentValue);
           },
@@ -35,14 +34,14 @@ class _TrnRequestFormState extends State<TrnRequestForm> {
           height: 16,
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startTransferTrnRequest();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "TrnRequest",)
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

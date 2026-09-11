@@ -6,10 +6,10 @@ class ApplePayForm extends StatefulWidget {
 
   final bool isSandboxEnabled;
 
-  ApplePayForm({required this.isSandboxEnabled});
+  const ApplePayForm({super.key, required this.isSandboxEnabled});
 
   @override
-  _ApplePayFormState createState() => _ApplePayFormState();
+  State<ApplePayForm> createState() => _ApplePayFormState();
 
 }
 
@@ -27,7 +27,7 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
       children: <Widget>[
         TextFormField(
           initialValue: _amount.toString(),
-          decoration: InputDecoration(labelText: "Amount"),
+          decoration: const InputDecoration(labelText: "Amount"),
           onChanged: (currentValue) {
             setState(() {
               _amount = int.parse(currentValue);
@@ -36,7 +36,7 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
         ),
         TextFormField(
           initialValue: _appleMerchantId,
-          decoration: InputDecoration(labelText: "Apple Merchant Id"),
+          decoration: const InputDecoration(labelText: "Apple Merchant Id"),
           onChanged: (currentValue) {
             setState(() {
               _appleMerchantId = currentValue;
@@ -44,14 +44,14 @@ class _ApplePayFormState extends State<ApplePayForm> implements ApplePayTrnRegis
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startApplePay();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "ApplePay")
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

@@ -5,10 +5,10 @@ class CardData {
   final String _cvv;
 
   CardData({required String number, required int expiryMonth, required int expiryYear, required String cvv})
-      : this._number = number,
-        this._expiryMonth = expiryMonth,
-        this._expiryYear = expiryYear,
-        this._cvv = cvv;
+      : _number = number,
+        _expiryMonth = expiryMonth,
+        _expiryYear = expiryYear,
+        _cvv = cvv;
 
   String get cvv => _cvv;
   int get expiryYear => _expiryYear;

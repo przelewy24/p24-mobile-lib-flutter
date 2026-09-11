@@ -3,8 +3,8 @@ class SdkResult {
   final String? _payload;
 
   SdkResult({required SdkStatus status, String? payload})
-      : this._status = status,
-        this._payload = payload;
+      : _status = status,
+        _payload = payload;
 
   SdkStatus get status => _status;
   String? get payload => _payload;

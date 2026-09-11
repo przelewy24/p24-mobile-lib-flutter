@@ -1,0 +1,26 @@
+# This file configures the static analyzer for the p24_sdk package.
+#
+# The issues identified by the analyzer are surfaced in the UI of Dart-enabled
+# IDEs (https://dart.dev/tools#ides-and-editors). The analyzer can also be
+# invoked from the command line by running `flutter analyze`.
+
+include: package:flutter_lints/flutter.yaml
+
+analyzer:
+  exclude:
+    - build/**
+    - android/**
+    - ios/**
+
+# The lint rules applied to this package can be customized below, either to
+# disable rules coming from `package:flutter_lints/flutter.yaml` or to enable
+# additional ones. The full list of available lints is published at
+# https://dart.dev/lints.
+#
+# A rule can also be suppressed for a single line or a whole file by using the
+# `// ignore: name_of_lint` and `// ignore_for_file: name_of_lint` syntax.
+linter:
+  rules:
+
+# Additional information about this file can be found at
+# https://dart.dev/guides/language/analysis-options

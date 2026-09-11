@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:p24_sdk/p24_sdk.dart';
@@ -12,10 +11,10 @@ class TrnDirectForm extends StatefulWidget {
   final int merchantId;
   final String crc;
 
-  TrnDirectForm({required this.isSandboxEnabled, required this.merchantId, required this.crc});
+  const TrnDirectForm({super.key, required this.isSandboxEnabled, required this.merchantId, required this.crc});
 
   @override
-  _TrnDirectFormState createState() => _TrnDirectFormState();
+  State<TrnDirectForm> createState() => _TrnDirectFormState();
 }
 
 class _TrnDirectFormState extends State<TrnDirectForm> {
@@ -33,7 +32,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
       children: <Widget>[
         TextFormField(
           initialValue: _amount.toString(),
-          decoration: InputDecoration(labelText: "Amount (in gr)"),
+          decoration: const InputDecoration(labelText: "Amount (in gr)"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue){
@@ -43,7 +42,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
           },
         ),
         TextFormField(
-          decoration: InputDecoration(labelText: "Method number"),
+          decoration: const InputDecoration(labelText: "Method number"),
           inputFormatters: [FilteringTextInputFormatter.digitsOnly],
           keyboardType: TextInputType.number,
           onChanged: (currentValue) {
@@ -54,7 +53,7 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
         ),
         TextFormField(
           initialValue: _description,
-          decoration: InputDecoration(labelText: "Description"),
+          decoration: const InputDecoration(labelText: "Description"),
           onChanged: (currentValue) {
             setState(() {
               _description = currentValue;
@@ -62,14 +61,14 @@ class _TrnDirectFormState extends State<TrnDirectForm> {
           },
         ),
         ElevatedButton(
-          child: Text("START"),
+          child: const Text("START"),
           onPressed: () {
             _startTransferTrnDirect();
           },
         ),
         (_sdkResult != null)
             ? SdkStatusWidget(sdkResult: _sdkResult, prefix: "TrnDirect")
-            : SizedBox.shrink(),
+            : const SizedBox.shrink(),
       ],
     );
   }

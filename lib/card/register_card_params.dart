@@ -4,11 +4,11 @@ class RegisterCardParams {
   final String _url;
   final CardData? _cardData;
 
-  RegisterCardParams({required String url}) : this._url = url, this._cardData = null;
+  RegisterCardParams({required String url}) : _url = url, _cardData = null;
 
   RegisterCardParams.prefilled({required String url, required CardData cardData})
-      : this._url = url,
-        this._cardData = cardData;
+      : _url = url,
+        _cardData = cardData;
 
   String get url => _url;
   CardData? get cardData => _cardData;

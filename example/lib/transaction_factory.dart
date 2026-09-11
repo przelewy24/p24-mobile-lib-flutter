@@ -2,8 +2,8 @@ import 'package:p24_sdk/p24_sdk.dart';
 
 class TransactionFactory {
 
-  static const FIRST_BILLING_PASSAGE_ACCOUNT = 51986;
-  static const SECOND_BILLING_PASSAGE_ACCOUNT = 51987;
+  static const firstBillingPassageAccount = 51986;
+  static const secondBillingPassageAccount = 51987;
 
   static TransactionParams getTestTransaction({required merchantId, required String crc, required int amount, required String description, int? method}){
     return TransactionParams(
@@ -20,7 +20,7 @@ class TransactionFactory {
   }
 
   static PassageCart getPassageCart() {
-    List<PassageItem> _items = <PassageItem>[];
+    List<PassageItem> items = <PassageItem>[];
 
     for (int i = 0; i<10; i++) {
       int price = 2 * (100 + i);
@@ -33,12 +33,12 @@ class TransactionFactory {
           quantity: 2,
           targetAmount: price,
           targetPosId: (i / 2 == 1)
-              ? FIRST_BILLING_PASSAGE_ACCOUNT
-              : SECOND_BILLING_PASSAGE_ACCOUNT
+              ? firstBillingPassageAccount
+              : secondBillingPassageAccount
       );
-      _items.add(item);
+      items.add(item);
     }
 
-    return PassageCart(_items);
+    return PassageCart(items);
   }
 }

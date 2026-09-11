@@ -1,7 +1,7 @@
 class ExpressParams {
   final String _url;
 
-  ExpressParams({required String url}) : this._url = url;
+  ExpressParams({required String url}) : _url = url;
 
   String get url => _url;
 

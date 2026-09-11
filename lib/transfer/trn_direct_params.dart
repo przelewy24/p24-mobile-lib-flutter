@@ -6,8 +6,8 @@ class TrnDirectParams {
 
   TrnDirectParams(
       {required TransactionParams transactionParams, bool isSandbox = false})
-      : this._transactionParams = transactionParams,
-        this._isSandbox = isSandbox;
+      : _transactionParams = transactionParams,
+        _isSandbox = isSandbox;
 
   bool get isSandbox => _isSandbox;
   TransactionParams get transactionParams => _transactionParams;
