@@ -278,3 +278,7 @@ Raise minimum iOS deployment target to 15.0 and require Flutter 3.47 or newer, f
 ## 1.1.2
 
 Raise Android minSdkVersion from 19 to 24, matching Flutter 3.47. Apps targeting Android below 7.0 should stay on 1.0.72.
+
+## 1.1.3
+
+Add flutter_lints static analysis config and fix all reported lint issues
